@@ -1,0 +1,86 @@
+@import "src/sass/abstract/constants";
+@import "src/sass/abstract/mixins";
+
+.sub-nav {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  list-style: none;
+  margin-left: auto;
+  margin-right: -2.15rem;
+
+  li {
+    margin-right: 2.15rem;
+    text-decoration: none;
+
+    &:focus {
+      outline: -webkit-focus-ring-color auto 1px;
+    }
+  }
+
+  .hide-button {
+    @media (max-width: $content-width-pre-middle) {
+      display: none
+    }
+  }
+
+  .show-unvisible-element {
+    display: none;
+
+    @media (max-width: $content-width-pre-middle) {
+      display: block;
+    }
+  }
+
+  .hide-nav-item {
+    &:hover {
+      color: var(--color-foreground,$color-white);
+      background: 0 0;
+      opacity: .75;
+    }
+
+    @media (max-width: $content-width-middle) {
+      display: none!important;
+    }
+  }
+
+  &__item {
+    font-size: 17px;
+    line-height: 1;
+    font-weight: 400;
+    @include mvertical0();
+    color: var(--color-foreground,$color-white);
+    text-decoration: none;
+    //background: 0 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+    -webkit-transition: .1s opacity ease;
+    transition: .1s opacity ease;
+    white-space: nowrap;
+
+    &--button {
+      color: $color-white;
+      //color: var(--color-button-foreground,$color-white);
+      background: $color-main-green;
+      //background: var(--color-button-background,$color-main-green);
+      padding: .8rem 2rem;
+      -webkit-transition: .1s -webkit-transform ease;
+      transition: .1s -webkit-transform ease;
+      transition: .1s transform ease;
+      transition: .1s transform ease,.1s -webkit-transform ease;
+      font-weight: 600;
+
+      &:active {
+        -webkit-transform: translateY(1px);
+        transform: translateY(1px);
+      }
+
+      &:hover {
+        -webkit-transform: translateY(-1px);
+        transform: translateY(-1px);
+        opacity: .75;
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@import "src/sass/abstract/constants";
+@import "src/sass/abstract/mixins";
+
+.navigation {
+  position: fixed;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+
+  --color-background: $color-navigation-dark;
+  --color-foreground: $color-white;
+  --color-button-background: $color-main-green;
+  --color-button-foreground: $color-white;
+  --color-search-bar-background: rgba(255, 255, 255, 0.95);
+  --color-search-bar-background-focus: $color-white;
+  --color-search-bar-placeholder: $color-search-bar-grey;
+
+  background: $color-navigation-dark;
+  background: var(--color-background,$color-navigation-dark);
+
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 66px;
+  align-items: center;
+  padding: 0 1.15rem;
+  z-index: 3;
+
+  &__transparent {
+    --color-background: none;
+    --color-search-bar-background: none;
+    --color-search-bar-background-focus: none;
+    --color-search-bar-placeholder: none;
+  }
+
+  &>*:not(:last-child) {
+    margin-right: 2.15rem;
+  }
+
+  &__logo {
+    display: flex;
+    font-size: 19px;
+    line-height: 1;
+    font-weight: 600;
+    @include mvertical0();
+    color: var(--color-foreground,$color-white);
+    -webkit-box-align: center;
+    align-items: center;
+    text-decoration: none;
+
+    &__img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__text {
+      margin-left: 1rem;
+    }
+  }
+
+  &__search-bar {
+    max-width: 750px;
+    width: 100%;
+  }
+}

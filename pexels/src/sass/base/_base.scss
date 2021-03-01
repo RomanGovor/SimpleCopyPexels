@@ -1,0 +1,35 @@
+@import "src/sass/abstract/constants";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*, :before, :after {
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: -apple-system,BlinkMacSystemFont,segoe ui,roboto,oxygen,cantarell,helvetica neue,ubuntu,sans-serif;
+  color: $color-main-text;
+  font-size: 14px;
+  height: 100%;
+  margin: 0;
+
+  background-color: $color-white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.none {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+}
