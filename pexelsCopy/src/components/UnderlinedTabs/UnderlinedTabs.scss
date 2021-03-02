@@ -1,0 +1,139 @@
+@import "../../sass/abstract/constants";
+
+.underlined-tabs {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: -webkit-box;
+  display: flex;
+
+  &--centered {
+    display: block;
+    text-align: center
+  }
+
+  &--grey-background {
+    background: #f9f9f9
+  }
+
+
+  &--large &__tab {
+    display: block;
+    font-size: 17px;
+    line-height: 26px;
+    font-weight: 600;
+    margin-top: 0;
+    letter-spacing: .4px;
+    margin-bottom: 0;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 1.25rem;
+
+    &:after {
+      height: .22rem;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px
+    }
+
+    .svg-icon {
+      width: 25px;
+      height: 25px;
+
+      &:first-child {
+        margin-right: .6rem
+      }
+
+      &:last-child {
+        margin-left: .6rem
+      }
+    }
+  }
+
+  &--shadow {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08)
+  }
+
+  &__tab {
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: .7rem 1rem;
+    color: #5e5e5e;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-transition: .2s color ease;
+    transition: .2s color ease;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      -webkit-transition: .2s opacity ease;
+      transition: .2s opacity ease
+    }
+
+    &--active:after {
+      opacity: 1;
+    }
+
+    &:after {
+      background: #0064f9
+    }
+
+    &:after {
+      height: .15rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+
+      .svg-icon {
+        width: 17px;
+        height: 17px;
+
+        &:first-child {
+          margin-right: .3rem
+        }
+
+        &:last-child {
+          margin-left: .3rem
+        }
+
+        svg {
+          -webkit-transition: .2s all ease;
+          transition: .2s all ease;
+          fill: #5e5e5e
+        }
+      }
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &--active {
+      color: #0064f9;
+    }
+
+    &__count {
+      font-size: 14px;
+      font-weight: 400;
+      margin-left: .4rem;
+      opacity: .8;
+
+      @media(max-width: $content-width-pre-middle) {
+        display:none
+      }
+    }
+  }
+}

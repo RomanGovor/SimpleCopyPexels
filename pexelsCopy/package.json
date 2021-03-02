@@ -13,6 +13,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/redux": "^3.6.0",
     "@types/redux-form": "^8.3.1",
+    "axios": "^0.21.1",
     "node-sass": "^5.0.0",
     "pexels": "^1.0.1",
     "react": "^17.0.1",
