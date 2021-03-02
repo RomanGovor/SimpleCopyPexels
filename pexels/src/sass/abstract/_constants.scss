@@ -7,5 +7,8 @@ $color-navigation-dark: #232A34;
 $color-input-focus: #071B4D;
 $color-search-bar-grey: #5E5E5E;
 
+$header-line-gradient: linear-gradient(180deg,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%),linear-gradient(180deg,rgba(0,0,0,0.2) 0%,transparent 100%);
+$header-webkit-line-gradient: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.2)),to(rgba(0,0,0,0.2))),-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.2)),to(transparent));
+
 $content-width-middle: 1000px;
 $content-width-pre-middle: 849px;

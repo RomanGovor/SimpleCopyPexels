@@ -2,9 +2,13 @@ import React from "react";
 import './search-bar.scss'
 import searchIcon from '../../assets/icons/search.svg'
 
-const SearchBar: React.FC = () => {
+interface ISearchBar {
+    isBigSearchBar?: boolean
+}
+
+const SearchBar: React.FC<ISearchBar> = ({isBigSearchBar = false}) => {
    return (
-       <form className={'search-bar'} method="get">
+       <form className={'search-bar ' + (isBigSearchBar && 'search-bar--bigger')} method="get">
            <div className={'search-bar__container'}>
                <input placeholder="Search for free photos" type="search"/>
                <button>

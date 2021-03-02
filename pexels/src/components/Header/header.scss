@@ -1,0 +1,233 @@
+@import "../../sass/abstract/constants";
+@import "../../sass/abstract/mixins";
+
+.header {
+  position: relative;
+  //display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 1.15rem;
+  padding-top: 74px;
+  padding-bottom: 66px;
+  color: $color-white;
+  background-color: $color-white-placeholder;
+  text-decoration: none;
+  height: 100%;
+  max-height: 500px;
+  min-height: 380px;
+  z-index: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $header-webkit-line-gradient;
+    background: $header-line-gradient;
+    z-index: 2
+  }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+      object-fit: cover;
+      background: $color-navigation-dark;
+    }
+  }
+
+  &__content {
+    max-width: 650px;
+    width: 100%;
+    z-index: 3;
+
+    &--wide {
+      max-width: 900px;
+    }
+
+    &--left {
+      margin: 0 7.5rem;
+
+      @media(max-width: $content-width-pre-middle) {
+        margin:0
+      }
+    }
+  }
+
+  &__title {
+    display: block;
+    font-size: 36px;
+    line-height: 48px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 15px
+  }
+
+  &__subtitle {
+    display: block;
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 9px;
+  }
+
+  &__search-container {
+    .rd__text-input {
+      margin-top: 2.85rem;
+    }
+
+    &__search-tags {
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: center;
+      align-items: center;
+
+      &>*:not(:last-child) {
+        margin-right: .6rem
+      }
+
+      &__tag-container {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        position: relative;
+        list-style: none;
+        white-space: nowrap;
+        width: 100%;
+        margin: 0;
+        padding: .6rem 0;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+
+        &__tag {
+          display: block;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 300;
+          margin-top: 0;
+          margin-bottom: 0;
+          display: inline-block;
+          margin-right: 0.3rem/2;
+          opacity: .8;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          &:hover::after {
+            opacity: .8;
+          }
+
+          &:not(:last-child):after {
+            content: ",";
+            margin-left: 5px;
+          }
+
+          &:first-child {
+            margin-left: .6rem
+          }
+
+          &:last-child {
+            margin-right: .6rem
+          }
+        }
+
+        li {
+          display: inline-block;
+
+          a {
+            text-decoration: none
+          }
+        }
+
+        &>li:last-child {
+          margin-bottom: 1px;
+
+          @media(max-width: $content-width-pre-middle) {
+            overflow-x:auto;
+          }
+        }
+
+        @media(max-width: $content-width-pre-middle) {
+          &__suggested {
+            display:none
+          }
+        }
+      }
+    }
+  }
+
+  &__footer {
+    display: block;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: 600;
+    @include mvertical0();
+    position: absolute;
+    height: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0 1.15rem;
+    z-index: 3;
+
+    @media(max-width: $content-width-pre-middle) {
+      display:none
+    }
+
+    &__item {
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      height: 100%;
+      font-weight: inherit;
+
+      &--align-right {
+        align-self: flex-end;
+        text-align: right;
+      }
+
+      a {
+        display: block;
+        font-size: 12px;
+        line-height: 19px;
+        font-weight: 300;
+        @include mvertical0();
+        color: $color-white;
+        text-decoration: none;
+        opacity: .5;
+
+        &:hover {
+          opacity: 1
+        }
+      }
+    }
+  }
+
+}
