@@ -1,0 +1,32 @@
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+
+  &-center {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 1280px;
+  }
+
+  &--big {
+    width: 1020px;
+    max-width: 100%;
+  }
+
+  &--sm {
+    width: 860px;
+    max-width: 100%
+  }
+
+  &--tiny {
+    width: 740px;
+    max-width: 100%
+  }
+
+  &--teeny {
+    width: 640px;
+    max-width: 100%
+  }
+}

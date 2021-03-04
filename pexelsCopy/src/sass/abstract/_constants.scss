@@ -5,10 +5,17 @@ $color-black: #000000;
 $color-main-text: #1A1A1A;
 $color-navigation-dark: #232A34;
 $color-input-focus: #071B4D;
+$color-active-underlined-tabs-item: #0064f9;
 $color-search-bar-grey: #5E5E5E;
+$color-button-shadow: rgba(82,95,127,.04);
+$color-dropdown-li-background: #e8e8e8;
+$color-dropdown-li-color: #1a1a1a;
+
 
 $header-line-gradient: linear-gradient(180deg,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%),linear-gradient(180deg,rgba(0,0,0,0.2) 0%,transparent 100%);
 $header-webkit-line-gradient: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.2)),to(rgba(0,0,0,0.2))),-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.2)),to(transparent));
 
+$content-width-higher: 1900px;
 $content-width-middle: 1000px;
 $content-width-pre-middle: 849px;
+$content-width-pre-little: 549px;

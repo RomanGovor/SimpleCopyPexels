@@ -90,7 +90,7 @@
     }
 
     &:after {
-      background: #0064f9
+      background: $color-active-underlined-tabs-item;
     }
 
     &:after {
@@ -122,7 +122,7 @@
     &:focus,
     &:active,
     &--active {
-      color: #0064f9;
+      color: $color-active-underlined-tabs-item;
     }
 
     &__count {

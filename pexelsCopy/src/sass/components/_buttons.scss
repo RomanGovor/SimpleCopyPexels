@@ -27,17 +27,59 @@
 
   white-space: nowrap;
   padding: 11px 24px;
-  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 1px 0 rgb(0,0,0);
+
+  &--no-click {
+    cursor: default
+  }
+
+  &--with-icon {
+    padding-right: .6rem;
+    padding-left: .6rem;
+
+    .svg-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+      margin-left: 6px;
+    }
+  }
+
+  &--text-primary {
+    background: 0 0;
+    color: $color-dropdown-li-color;
+    border-color: transparent;
+    box-shadow: none;
+
+    &:hover {
+      background: 0 0;
+      border-color: transparent;
+      color: #1a1a1a;
+    }
+  }
+
+  &--text,
+  &--text-primary,
+  &--text-secondary {
+    display: block;
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 0;
+    //display: -webkit-inline-box;
+    display: inline-flex;
+  }
+
+  &--compact {
+    padding: 6px 13px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    min-height: 32px;
+  }
 
   &:focus {
     outline: none;
   }
-}
-
-.rd__dropdown {
-  position: relative;
-}
-
-.rd__dropdown .rd__button {
-  height: 100%;
 }

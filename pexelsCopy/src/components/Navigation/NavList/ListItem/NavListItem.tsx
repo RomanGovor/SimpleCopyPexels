@@ -19,7 +19,7 @@ const getItemClassesByType = (typeOfItem: string) : IClassesByTypes => {
     const defaultClasses: IClassesByTypes = {
         mainClasses: 'hide-nav-item',
         wrapAboveLink: 'rd__dropdown',
-        linkClasses: 'sub-nav__item rd__button'
+        linkClasses: 'sub-nav__item'
     }
 
     switch (typeOfItem) {
@@ -27,7 +27,7 @@ const getItemClassesByType = (typeOfItem: string) : IClassesByTypes => {
             return {
                 mainClasses: 'hide-button',
                 wrapAboveLink: 'rd__dropdown',
-                linkClasses: 'rd__button sub-nav__item',
+                linkClasses: 'sub-nav__item',
                 iconPath: tripleSvg
             }
         case 'link':

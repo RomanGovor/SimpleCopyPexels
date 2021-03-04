@@ -1,0 +1,25 @@
+@import "../sass/abstract/constants";
+
+.home-page {
+  margin: auto;
+  max-width: 1400px;
+  min-height: 1500px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  &__cards {
+    display: -webkit-box;
+    display: flex
+  }
+
+  @media(max-width: $content-width-pre-middle) {
+      padding-left:1rem;
+      padding-right: 1rem
+  }
+
+  @media(min-width: $content-width-higher) {
+    .home-page {
+      max-width:1850px
+    }
+  }
+}
