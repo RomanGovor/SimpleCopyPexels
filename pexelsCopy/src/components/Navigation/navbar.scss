@@ -7,7 +7,7 @@
   display: flex;
   -webkit-box-align: center;
 
-  --color-background: $color-navigation-dark;
+  //--color-background: $color-navigation-dark;
   --color-foreground: #fff;
   --color-button-background: $color-main-green;
   --color-button-foreground: $color-white;
@@ -31,6 +31,10 @@
     --color-search-bar-background: none;
     --color-search-bar-background-focus: none;
     --color-search-bar-placeholder: none;
+
+    .navigation__search-bar {
+      display: none;
+    }
   }
 
   &>*:not(:last-child) {

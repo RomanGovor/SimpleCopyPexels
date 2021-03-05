@@ -9,3 +9,9 @@ export type PhotoCardType = {
     phPhotoLink: string
     phNames: string
 }
+
+export type ArrColumnsType = {
+    colIndex: number
+    height: number
+    photos: Array<number>
+}

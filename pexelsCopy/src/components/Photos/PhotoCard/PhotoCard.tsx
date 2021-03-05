@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from "react";
+import React from "react";
 import {PhotoCardType} from "../../../interfaces/headerInterfaces";
 
 import favoriteIcon from '../../../assets/icons/favorite-icon.svg';
@@ -14,24 +14,11 @@ const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames}) =
     const img = new Image();
     img.src = src;
 
-    const [heightImg, setHeightImg] =  useState(0);
-    setHeightImg(img.height);
-
-    const [pdTop, setPdTop] =  useState({
-        paddingTop: `${heightImg}px`
-    });
-
-
-    // img.onload = function() {
-    //     setHeightImg(img.height);
-    //     setPdTop({
-    //         paddingTop: `${heightImg}px`
-    //     })
-    // }
+    // const calcAttitudeImg: number = img.height / img.width * 100;
 
     return (
         <div className={'photo-card hide-featured-badge hide-favorite-badge'}>
-            <article style={pdTop} className={'photo-item photo-item--overlay'}>
+            <article className={'photo-item photo-item--overlay'}>
                 <a target={'_blank'} href={'/'} className={'photo-item__link'}>
                     <img src={src} className={'photo-item__img'}/>
                     <div className={'badge-container'}>
@@ -45,7 +32,7 @@ const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames}) =
                 </a>
                 <a target={'_blank'} href={phLink} className={'photo-item__photographer'}>
                     <img height={'30'} width={'30'} src={phPhotoLink} className={'photo-item__avatar'}/>
-                    <span>{phNames}</span>
+                    <span className={'photo-item__name'}>{phNames}</span>
                 </a>
                 <div className={'photo-item__info'}>
                     <button className={'js-collect rd__button rd__button--collect rd__button--no-padding rd__button--text-white rd__button--with-icon'}>

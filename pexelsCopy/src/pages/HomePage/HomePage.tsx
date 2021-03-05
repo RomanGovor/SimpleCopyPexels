@@ -1,10 +1,18 @@
 import React, {useState} from "react";
 import './HomePage.scss';
 import './TitleTabs.scss';
-import arrowDown from '../assets/icons/arrow-down.svg';
-import Photos from "../components/Photos/Photos";
+import arrowDown from '../../assets/icons/arrow-down.svg';
+import Photos from "../../components/Photos/Photos";
+import {InitialStateType} from "../../redux/homeReducer";
 
-const HomePage: React.FC = () => {
+type PropsType = {
+    homePage: InitialStateType
+}
+
+const HomePage: React.FC<PropsType> = (props) => {
+    const photos = props.homePage.photos;
+    const maxCountOfColumns = props.homePage.maxCountOfColumns;
+
     const [isMouseOver, setMouseEnter] = useState(false);
 
     const setFalseMouseOver = (event: React.MouseEvent) => {
@@ -39,7 +47,7 @@ const HomePage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <Photos/>
+                <Photos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
             </div>
         </>
     );
