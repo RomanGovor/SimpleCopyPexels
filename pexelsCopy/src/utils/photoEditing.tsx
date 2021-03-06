@@ -2,7 +2,7 @@ import {PhotoCardType} from "../types/commonTypes";
 import {defaultPhotoParameters} from "./constants/constants";
 import {ErrorResponse, Photo, Photos} from "pexels";
 
-export function getPhotosByResponseData(data: Photos | ErrorResponse): Array<PhotoCardType> {
+export function photoEditing(data: Photos | ErrorResponse): Array<PhotoCardType> {
     const photos: Array<PhotoCardType> = [];
 
     // @ts-ignore
@@ -10,11 +10,16 @@ export function getPhotosByResponseData(data: Photos | ErrorResponse): Array<Pho
         const obj: PhotoCardType = {
             phLink: photo.photographer_url || defaultPhotoParameters.phLink,
             phNames: photo.photographer || defaultPhotoParameters.phNames,
-            src: photo.src.landscape || defaultPhotoParameters.src,
+            src: photo.src.original || defaultPhotoParameters.src,
             phPhotoLink: defaultPhotoParameters.phPhotoLink
         }
         photos.push(obj);
     });
 
     return photos;
+}
+
+
+export function isUniquePhoto(lastPhotoState: PhotoCardType, lastPhotoNew: PhotoCardType): Boolean {
+    return JSON.stringify(lastPhotoNew) !== JSON.stringify(lastPhotoState);
 }

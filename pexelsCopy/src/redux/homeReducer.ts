@@ -7,7 +7,7 @@ import defaultHeaderImage from '../assets/images/default-header-bg.jpeg';
 
 import {photoAPI} from '../api/api';
 import {getRandomInt} from "../utils/common";
-import {getPhotosByResponseData} from "../utils/getPhotosByResponseData";
+import {isUniquePhoto, photoEditing} from "../utils/photoEditing";
 
 type ThunkType = BaseThunkType<ActionsType>
 
@@ -65,10 +65,15 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
             };
         }
         case 'UPDATE_ARRAY_PHOTOS': {
-            return {
-                ...state,
-                photos: [...state.photos, ...action.photos],
-            };
+            const isUnique = isUniquePhoto(state.photos[state.photos.length - 1], action.photos[action.photos.length - 1]);
+            console.log(isUnique);
+            if(isUnique) {
+                return {
+                    ...state,
+                    photos: [...state.photos, ...action.photos],
+                };
+            }
+            return state;
         }
         default:
             return state;
@@ -98,11 +103,16 @@ export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
     }
 }
 
+let curatedPageIndex: number = 0
+
 export const updateArrayPhotos = (page: number = 1): ThunkType => async (dispatch) => {
-    const data = await photoAPI.getCuratedPhoto(page);
-    if (Boolean(data)) {
-        const photos = getPhotosByResponseData(data);
-        dispatch(actions.updateArrayPhotos(photos));
+    if (page !== curatedPageIndex) {
+        const data = await photoAPI.getCuratedPhoto(page);
+        if (Boolean(data)) {
+            const photos = photoEditing(data);
+            dispatch(actions.updateArrayPhotos(photos));
+            curatedPageIndex = page;
+        }
     }
 }
 

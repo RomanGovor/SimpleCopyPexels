@@ -7,10 +7,15 @@ import UnderlinedTabs from "../../components/UnderlinedTabs/UnderlinedTabs";
 import TitleTabs from "./TitleTabs/TitleTabs";
 import {useDispatch} from "react-redux";
 import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
+import Preloader from "../../components/common/Preloader/Preloader";
+import {withSuspense} from "../../components/common/Suspense/withSuspense";
 
 type PropsType = {
     homePage: InitialStateType
 }
+
+const SuspendedPhotos = withSuspense(Photos);
+
 
 const HomePage: React.FC<PropsType> = (props) => {
     const {photos, headerPhoto, maxCountOfColumns} = props.homePage;
@@ -21,7 +26,7 @@ const HomePage: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
 
     const scrollHandler = (event: any) => {
-        if (event.target.documentElement.scrollHeight - (event.target.documentElement.scrollTop + window.innerHeight) < 200
+        if (event.target.documentElement.scrollHeight - (event.target.documentElement.scrollTop + window.innerHeight) < 100
             && currentPage < MAX_COUNT_PAGE) {
             setFetching(true);
         }
@@ -48,7 +53,8 @@ const HomePage: React.FC<PropsType> = (props) => {
             <UnderlinedTabs />
             <div className={'container home-page'}>
                 <TitleTabs />
-                <Photos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
+                <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
+                {!isFetching ? <Preloader /> : null}
             </div>
         </>
     );
