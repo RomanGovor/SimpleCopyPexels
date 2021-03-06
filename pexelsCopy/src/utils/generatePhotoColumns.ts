@@ -1,4 +1,4 @@
-import {PhotoCardType, ArrColumnsType} from "../interfaces/headerInterfaces";
+import {PhotoCardType, ArrColumnsType} from "../types/commonTypes";
 
 export const generatePhotoColumns = (columns: number, photos: Array<PhotoCardType>): Array<ArrColumnsType> => {
     let arrColumns: Array<ArrColumnsType> = Array(columns).fill(0).map((el, i) => {

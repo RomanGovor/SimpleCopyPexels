@@ -1,12 +1,12 @@
 import React from "react";
-import {PhotoCardType} from "../../../interfaces/headerInterfaces";
+import {PhotoCardType} from "../../../../types/commonTypes";
 
-import favoriteIcon from '../../../assets/icons/favorite-icon.svg';
-import starIcon from '../../../assets/icons/star.svg';
-import addIcon from '../../../assets/icons/add.svg';
-import successIcon from '../../../assets/icons/success.svg';
-import heartIcon from '../../../assets/icons/heart.svg';
-import fullHeartIcon from '../../../assets/icons/full-heart.svg';
+import favoriteIcon from '../../../../assets/icons/favorite-icon.svg';
+import starIcon from '../../../../assets/icons/star.svg';
+import addIcon from '../../../../assets/icons/add.svg';
+import successIcon from '../../../../assets/icons/success.svg';
+import heartIcon from '../../../../assets/icons/heart.svg';
+import fullHeartIcon from '../../../../assets/icons/full-heart.svg';
 
 import './badge.scss'
 

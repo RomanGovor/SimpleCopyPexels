@@ -1,24 +1,21 @@
-import React from 'react';
-import Header from "./components/Header/Header";
+import React, {useEffect} from 'react';
 import Navbar from "./components/Navigation/Navbar";
-import UnderlinedTabs from "./components/UnderlinedTabs/UnderlinedTabs";
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
-import store from "./redux/store";
+import {useDispatch} from "react-redux";
 import HomePageContainer from "./pages/HomePage/HomePageContainer";
+import {setHeaderPhoto} from "./redux/homeReducer";
 
 const App: React.FC = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setHeaderPhoto());
+    }, [])
+
     return (
-        <BrowserRouter>
-            <Provider store={store}>
-                <div className="App">
-                    <Navbar />
-                    <Header />
-                    <UnderlinedTabs />
-                    <HomePageContainer />
-                </div>
-            </Provider>
-        </BrowserRouter>
+        <div className="App">
+            <Navbar />
+            <HomePageContainer />
+        </div>
     );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {IHeaderContentItem} from "../../../interfaces/headerInterfaces";
+import {IHeaderContentItem} from "../../../types/commonTypes";
 
 const HeaderContentItem: React.FC<IHeaderContentItem> = ({link,category}) => {
     return (

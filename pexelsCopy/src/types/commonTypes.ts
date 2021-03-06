@@ -6,7 +6,7 @@ export interface IHeaderContentItem {
 export type PhotoCardType = {
     src: string
     phLink: string
-    phPhotoLink: string
+    phPhotoLink?: string
     phNames: string
 }
 
@@ -15,3 +15,5 @@ export type ArrColumnsType = {
     height: number
     photos: Array<number>
 }
+
+

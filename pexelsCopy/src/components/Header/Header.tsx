@@ -1,19 +1,25 @@
 import React from "react";
 import './header.scss';
-import defaultHeaderBg from '../../assets/images/default-header-bg.jpeg';
 import HeaderContent from "./HeaderContent/HeaderContent";
+import {PhotoCardType} from "../../types/commonTypes";
 
-const Header: React.FunctionComponent = () => {
+type PropsType = {
+    headerPhoto: PhotoCardType
+}
+
+const Header: React.FunctionComponent<PropsType> = (props) => {
+    const headerPhoto = props.headerPhoto;
+
     return (
         <header className={'header'}>
             <div className={'header__background'}>
-                <img src={defaultHeaderBg}/>
+                <img src={headerPhoto.src}/>
             </div>
             <div className={'header__footer'}>
                 <div className="header__footer__item"></div>
                 <div className="header__footer__item header__footer__item--align-right">
-                    <a href="https://www.pexels.com/photo/sea-water-ocean-texture-6924256/"
-                       target={'_blank'}>Photo by Nothing Ahead</a>
+                    <a href={headerPhoto.phLink}
+                       target={'_blank'}>Photo by {headerPhoto.phNames}</a>
                 </div>
             </div>
             <HeaderContent />

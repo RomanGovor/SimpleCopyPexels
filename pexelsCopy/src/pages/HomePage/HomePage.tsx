@@ -1,52 +1,53 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './HomePage.scss';
-import './TitleTabs.scss';
-import arrowDown from '../../assets/icons/arrow-down.svg';
 import Photos from "../../components/Photos/Photos";
-import {InitialStateType} from "../../redux/homeReducer";
+import {InitialStateType, updateArrayPhotos} from "../../redux/homeReducer";
+import Header from "../../components/Header/Header";
+import UnderlinedTabs from "../../components/UnderlinedTabs/UnderlinedTabs";
+import TitleTabs from "./TitleTabs/TitleTabs";
+import {useDispatch} from "react-redux";
+import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
 
 type PropsType = {
     homePage: InitialStateType
 }
 
 const HomePage: React.FC<PropsType> = (props) => {
-    const photos = props.homePage.photos;
-    const maxCountOfColumns = props.homePage.maxCountOfColumns;
+    const {photos, headerPhoto, maxCountOfColumns} = props.homePage;
 
-    const [isMouseOver, setMouseEnter] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isFetching, setFetching] = useState(true);
 
-    const setFalseMouseOver = (event: React.MouseEvent) => {
-        setMouseEnter(false);
+    const dispatch = useDispatch();
+
+    const scrollHandler = (event: any) => {
+        if (event.target.documentElement.scrollHeight - (event.target.documentElement.scrollTop + window.innerHeight) < 200
+            && currentPage < MAX_COUNT_PAGE) {
+            setFetching(true);
+        }
     }
 
-    const setTrueMouseOver = (event: React.MouseEvent) => {
-        setMouseEnter(true);
-    }
+    useEffect(() => {
+        if (isFetching) {
+            dispatch(updateArrayPhotos(currentPage));
+            setCurrentPage(prevState => prevState + 1);
+            setFetching(false);
+        }
+    }, [isFetching]);
+
+    useEffect(() => {
+        document.addEventListener('scroll', scrollHandler);
+        return function () {
+            document.removeEventListener('scroll', scrollHandler);
+        }
+    }, []);
 
     return (
         <>
+            <Header headerPhoto={headerPhoto}/>
+            <UnderlinedTabs />
             <div className={'container home-page'}>
-                <div className={'title-tabs'}>
-                    <div className={'title-tabs__title'}>Free Stock Photos</div>
-                    <div onMouseOver={setTrueMouseOver}
-                         onMouseOut={setFalseMouseOver}
-                         className={`rd__dropdown rd__dropdown--right ${isMouseOver ? 'rd__dropdown--active': ''}`}>
-                        <div className={'rd__button rd__button--text-primary rd__button--compact rd__button--with-icon rd__button--no-right-padding'}>
-                            <span>Trending</span>
-                            <i className={'svg-icon'}>
-                                <img src={arrowDown}/>
-                            </i>
-                        </div>
-                        <div className={'rd__dropdown__container'}>
-                            <div className={'rd__dropdown__container__content'}>
-                                <ul className={'rd__dropdown__container__items'}>
-                                    <li><a href={'/'}>Trending</a></li>
-                                    <li><a target={'_blank'} href={'https://www.pexels.com/new-photos/'}>New</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <TitleTabs />
                 <Photos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
             </div>
         </>

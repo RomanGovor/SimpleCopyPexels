@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "../../SearchBar/SearchBar";
 import HeaderContentItem from "./HeaderContentItem";
-import {IHeaderContentItem} from "../../../interfaces/headerInterfaces";
+import {IHeaderContentItem} from "../../../types/commonTypes";
 
 
 const contentItems: Array<IHeaderContentItem> = [

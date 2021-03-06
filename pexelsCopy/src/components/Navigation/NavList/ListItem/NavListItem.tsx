@@ -25,7 +25,7 @@ const getItemClassesByType = (typeOfItem: string) : IClassesByTypes => {
     switch (typeOfItem) {
         case 'triplet':
             return {
-                mainClasses: 'hide-button',
+                mainClasses: 'hide-button mt05',
                 wrapAboveLink: 'rd__dropdown',
                 linkClasses: 'sub-nav__item',
                 iconPath: tripleSvg
