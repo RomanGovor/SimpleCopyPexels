@@ -1,21 +1,15 @@
 import React from "react";
 import SearchBar from "../../SearchBar/SearchBar";
 import HeaderContentItem from "./HeaderContentItem";
-import {IHeaderContentItem} from "../../../types/commonTypes";
+import {IHeaderContentItem, PhotoCardType} from "../../../types/commonTypes";
 
 
-const contentItems: Array<IHeaderContentItem> = [
-    {link: 'https://www.pexels.com/search/st%20patricks%20day/', category: 'st patricks day'},
-    {link: 'https://www.pexels.com/search/calendar/', category: 'calendar'},
-    {link: 'https://www.pexels.com/search/diversity/', category: 'diversity'},
-    {link: 'https://www.pexels.com/search/communication/', category: 'communication'},
-    {link: 'https://www.pexels.com/search/interview/', category: 'interview'},
-    {link: 'https://www.pexels.com/search/vaccine/', category: 'vaccine'},
-    {link: 'https://www.pexels.com/popular-searches/', category: 'more'},
-];
+type PropsType = {
+    recommendCategories: Array<IHeaderContentItem>
+}
 
-const HeaderContent: React.FunctionComponent = () => {
-    const contentItemsElements = contentItems
+const HeaderContent: React.FunctionComponent<PropsType> = (props) => {
+    const contentItemsElements = props.recommendCategories
         .map(({category, link}) => <HeaderContentItem link={link} category={category}/>)
 
     return (

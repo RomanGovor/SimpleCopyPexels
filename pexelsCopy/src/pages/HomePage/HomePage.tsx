@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './HomePage.scss';
-import Photos from "../../components/Photos/Photos";
 import {InitialStateType, updateArrayPhotos} from "../../redux/homeReducer";
-import Header from "../../components/Header/Header";
 import UnderlinedTabs from "../../components/UnderlinedTabs/UnderlinedTabs";
 import TitleTabs from "./TitleTabs/TitleTabs";
 import {useDispatch} from "react-redux";
@@ -14,11 +12,14 @@ type PropsType = {
     homePage: InitialStateType
 }
 
-const SuspendedPhotos = withSuspense(Photos);
+const Photos = React.lazy(() => import('../../components/Photos/Photos'));
+const Header = React.lazy(() => import('../../components/Header/Header'));
 
+const SuspendedPhotos = withSuspense(Photos);
+const SuspendedHeader = withSuspense(Header);
 
 const HomePage: React.FC<PropsType> = (props) => {
-    const {photos, headerPhoto, maxCountOfColumns} = props.homePage;
+    const {photos, headerPhoto, maxCountOfColumns, recommendCategories} = props.homePage;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetching, setFetching] = useState(true);
@@ -49,7 +50,7 @@ const HomePage: React.FC<PropsType> = (props) => {
 
     return (
         <>
-            <Header headerPhoto={headerPhoto}/>
+            <SuspendedHeader headerPhoto={headerPhoto} recommendCategories={recommendCategories}/>
             <UnderlinedTabs />
             <div className={'container home-page'}>
                 <TitleTabs />

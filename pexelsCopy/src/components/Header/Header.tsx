@@ -1,15 +1,15 @@
 import React from "react";
 import './header.scss';
 import HeaderContent from "./HeaderContent/HeaderContent";
-import {PhotoCardType} from "../../types/commonTypes";
+import {IHeaderContentItem, PhotoCardType} from "../../types/commonTypes";
 
 type PropsType = {
-    headerPhoto: PhotoCardType
+    headerPhoto: PhotoCardType,
+    recommendCategories: Array<IHeaderContentItem>
 }
 
 const Header: React.FunctionComponent<PropsType> = (props) => {
-    const headerPhoto = props.headerPhoto;
-
+    const {headerPhoto, recommendCategories} = props;
     return (
         <header className={'header'}>
             <div className={'header__background'}>
@@ -22,7 +22,7 @@ const Header: React.FunctionComponent<PropsType> = (props) => {
                        target={'_blank'}>Photo by {headerPhoto.phNames}</a>
                 </div>
             </div>
-            <HeaderContent />
+            <HeaderContent recommendCategories={recommendCategories}/>
         </header>
     )
 }
