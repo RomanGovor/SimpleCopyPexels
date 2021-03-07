@@ -10,7 +10,7 @@ type ThunkType = BaseThunkType<ActionsType>
 
 const initialState = {
     photos: [
-        {src: img1, phNames: 'kira schwarz', phPhotoLink: 'https://images.pexels.com/users/avatars/616468/kira-schwarz-869.jpeg?auto=compress&fit=crop&h=60&w=60', phLink: 'https://www.pexels.com/@kira-schwarz'},
+        {src: img1, phNames: 'kira schwarz', phPhotoLink: 'https://images.pexels.com/users/avatars/616468/kira-schwarz-869.jpeg?auto=compress&fit=crop&h=60&w=60', phLink: 'https://www.pexels.com/@kira-schwarz', photoId: 6868419},
     ] as Array<PhotoCardType>,
     maxCountOfColumns: 3,
     headerPhoto: {

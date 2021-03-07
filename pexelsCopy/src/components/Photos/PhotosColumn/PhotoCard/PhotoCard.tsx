@@ -7,14 +7,17 @@ import addIcon from '../../../../assets/icons/add.svg';
 import successIcon from '../../../../assets/icons/success.svg';
 import heartIcon from '../../../../assets/icons/heart.svg';
 import fullHeartIcon from '../../../../assets/icons/full-heart.svg';
+import downloadIcon from '../../../../assets/icons/download.svg';
 
 import './badge.scss'
 
-const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames}) => {
+const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames, photoId}) => {
     const img = new Image();
     img.src = src;
 
     // const calcAttitudeImg: number = img.height / img.width * 100;
+
+    console.log(photoId, phNames);
 
     return (
         <div className={'photo-card hide-featured-badge hide-favorite-badge'}>
@@ -35,6 +38,12 @@ const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames}) =
                     <span className={'photo-item__name'}>{phNames}</span>
                 </a>
                 <div className={'photo-item__info'}>
+                    <a className={'js-download rd__button rd__button--download rd__button--no-padding rd__button--text-white rd__button--with-icon'}
+                       download href={`https://www.pexels.com/photo/${photoId}/download/`}>
+                        <i className={'rd__button--download--active--icon svg-icon'}>
+                            <img src={downloadIcon}/>
+                        </i>
+                    </a>
                     <button className={'js-collect rd__button rd__button--collect rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
                         <i className={'rd__button--collect--not-active--icon svg-icon'}>
                             <img src={addIcon}/>

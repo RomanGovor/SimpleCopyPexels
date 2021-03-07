@@ -11,7 +11,7 @@ export type PhotoCardType = {
     phLink: string
     phPhotoLink?: string
     phNames: string
-    photoId?: number
+    photoId: number
 }
 
 export type ArrColumnsType = {

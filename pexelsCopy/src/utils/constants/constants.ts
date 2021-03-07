@@ -9,7 +9,8 @@ export const defaultPhotoParameters: PhotoCardType = {
     src: defaultImg,
     phNames: 'kira schwarz',
     phPhotoLink: defaultAvatar,
-    phLink: 'https://www.pexels.com/@kira-schwarz'
+    phLink: 'https://www.pexels.com/@kira-schwarz',
+    photoId: 2880507
 };
 
 export const mainCategories: Array<IHeaderContentItem> = [

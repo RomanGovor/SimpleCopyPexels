@@ -11,10 +11,13 @@ export function photoEditing(data: Photos | ErrorResponse): Array<PhotoCardType>
             phLink: photo.photographer_url || defaultPhotoParameters.phLink,
             phNames: photo.photographer || defaultPhotoParameters.phNames,
             src: photo.src.original || defaultPhotoParameters.src,
-            phPhotoLink: defaultPhotoParameters.phPhotoLink
+            phPhotoLink: defaultPhotoParameters.phPhotoLink,
+            photoId: photo.id || defaultPhotoParameters.photoId
         }
         photos.push(obj);
     });
+
+    console.log(photos);
 
     return photos;
 }

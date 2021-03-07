@@ -16,8 +16,11 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
 
     for (let i = 0; i < arrColumns.length; i++) {
         const photosColumn = arrColumns[i].photos.map((index) => {
-            return <PhotoCard src={photos[index].src} phLink={photos[index].phLink} phNames={photos[index].phNames}
-                              phPhotoLink={photos[index].phPhotoLink}/>
+            return <PhotoCard src={photos[index].src}
+                              phLink={photos[index].phLink}
+                              phNames={photos[index].phNames}
+                              phPhotoLink={photos[index].phPhotoLink}
+                              photoId={photos[index].photoId}/>
         })
 
         columns.push(<PhotosColumn photosElems={photosColumn} /> )

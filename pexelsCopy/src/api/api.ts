@@ -6,8 +6,6 @@ import {MAX_COUNT_PAGE} from "../utils/constants/constants";
 export const client = createClient('563492ad6f917000010000014640aabb4e9d420cbe1c0df7daf4c2bf');
 // const client = createClient('563492ad6f91700001000001c520042dfd994ae28a5bada18107e6fe');
 
-
-
 export const photoAPI = {
     getCategoryPhotos(query: string, page: number) {
         return client.photos.search({ query, per_page: 10, page }).then(photos => photos);
