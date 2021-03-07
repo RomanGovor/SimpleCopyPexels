@@ -5,16 +5,20 @@ import {actions, setHeaderPhoto} from "./redux/homeReducer";
 import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
 import {mainCategories} from "./utils/constants/constants";
+import {Redirect, Route, Switch} from 'react-router-dom'
+
 
 const HomePageContainer = React.lazy(() => import('./pages/HomePage/HomePageContainer'));
+const CategoryPageContainer = React.lazy(() => import('./pages/CategoryPage/CategoryPageContainer'));
+
 const SuspendedHomePage = withSuspense(HomePageContainer);
+const SuspendedCategoryPage = withSuspense(CategoryPageContainer);
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setHeaderPhoto());
-        // dispatch(setRecommendCategories());
 
         const recommendCategories = getRandomArray(mainCategories.length, 7, mainCategories);
         dispatch(actions.setRecommendCategories(recommendCategories));
@@ -22,8 +26,19 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <Navbar />
-            <SuspendedHomePage />
+            <Switch>
+                <Route exact path='/'
+                       render={() => <Redirect to={'/main'}/>}/>
+
+                <Route path='/main'
+                       render={() => <SuspendedHomePage />}/>
+
+                <Route path='/category/:query?'
+                       render={() => <SuspendedCategoryPage />}/>
+
+                <Route path='*'
+                       render={() => <div>404 NOT FOUND</div>}/>
+            </Switch>
         </div>
     );
 }

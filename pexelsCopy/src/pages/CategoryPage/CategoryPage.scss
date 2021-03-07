@@ -1,0 +1,76 @@
+@import "../../sass/abstract/constants";
+
+.category {
+  margin-top: 4rem;
+
+  &__header {
+    margin: auto;
+    max-width: 1400px;
+    padding: 2rem 2rem .5rem 2rem;
+
+    &__title {
+      display: block;
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 800;
+      margin-top: 0;
+      margin-bottom: 0;
+      text-transform: capitalize;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    &__subtitle {
+      display: block;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      margin-top: 0;
+      margin-bottom: 0;
+      color: #a6aaad;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1.25rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    &__colors {
+      margin-top: 1rem;
+    }
+
+    @media(max-width: $content-width-pre-middle) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    @media(min-width: $content-width-higher) {
+      max-width:1850px;
+    }
+  }
+
+  &__grid {
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin: auto;
+    max-width: 1400px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: $color-search-bar-grey;
+    margin-top: 1rem;
+
+    @media(max-width: $content-width-pre-middle) {
+      padding-left: 1rem;
+      padding-right: 1rem
+    }
+
+    @media(min-width: $content-width-higher) {
+      max-width:1850px;
+    }
+  }
+}

@@ -1,3 +1,6 @@
+import {InitialStateType as homeStateType} from "../redux/homeReducer";
+import {InitialStateType as categoryStateType} from "../redux/categoryReducer";
+
 export interface IHeaderContentItem {
     link: string,
     category: string
@@ -8,6 +11,7 @@ export type PhotoCardType = {
     phLink: string
     phPhotoLink?: string
     phNames: string
+    photoId?: number
 }
 
 export type ArrColumnsType = {
@@ -16,4 +20,4 @@ export type ArrColumnsType = {
     photos: Array<number>
 }
 
-
+export type commonStateType = homeStateType & categoryStateType;

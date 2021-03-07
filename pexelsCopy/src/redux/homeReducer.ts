@@ -2,11 +2,9 @@ import {InferActionsTypes, BaseThunkType} from './store';
 import {IHeaderContentItem, PhotoCardType} from '../types/commonTypes';
 import img1 from '../assets/images/defaultImages/image-1.jpeg';
 import defaultHeaderImage from '../assets/images/default-header-bg.jpeg';
-
 import {photoAPI} from '../api/api';
-import {getRandomArray, getRandomInt} from "../utils/common";
+import {getRandomInt} from "../utils/common";
 import {isUniquePhoto, photoEditing} from "../utils/photoEditing";
-import {mainCategories} from "../utils/constants/constants";
 
 type ThunkType = BaseThunkType<ActionsType>
 
@@ -20,28 +18,29 @@ const initialState = {
         phNames: 'Nothing ahead',
         phLink: 'https://www.pexels.com/@kira-schwarz'
     } as PhotoCardType,
-    recommendCategories: [] as Array<IHeaderContentItem>
+    recommendCategories: [] as Array<IHeaderContentItem>,
+    curatedPageIndex: 0 as number
 };
 
 export const actions = {
     addPostActionCreator: (phLink: string, phPhotoLink: string, src: string, phNames: string) =>
-        ({type: 'ADD_PHOTO_CARD', phNames, phPhotoLink, phLink, src
-        } as const),
+        ({type: 'MAIN/ADD_PHOTO_CARD', phNames, phPhotoLink, phLink, src} as const),
     setHeaderPhoto: (phLink: string, src: string, phNames: string) =>
-        ({type: 'UPDATE_HEADER_PHOTO', phNames, phLink, src} as const),
+        ({type: 'MAIN/UPDATE_HEADER_PHOTO', phNames, phLink, src} as const),
     updateArrayPhotos: (photos: Array<PhotoCardType>) =>
-        ({type: 'UPDATE_ARRAY_PHOTOS', photos} as const),
+        ({type: 'MAIN/UPDATE_ARRAY_PHOTOS', photos} as const),
     setRecommendCategories: (categories: Array<IHeaderContentItem>) =>
-        ({type: 'SET_RECOMMEND_CATEGORIES', categories} as const)
+        ({type: 'MAIN/SET_RECOMMEND_CATEGORIES', categories} as const),
+    setCuratedPageIndex: (page: number) =>
+        ({type: 'MAIN/SET_CURATED_PAGE_INDEX', page} as const)
 }
 
 export type InitialStateType = typeof initialState
 type ActionsType = InferActionsTypes<typeof actions>
 
 const homeReducer = (state = initialState, action: ActionsType): InitialStateType => {
-    console.log(action);
     switch (action.type) {
-        case 'ADD_PHOTO_CARD': {
+        case 'MAIN/ADD_PHOTO_CARD': {
             const newPhoto = {
                 phLink: action.phLink,
                 phPhotoLink: action.phLink,
@@ -53,7 +52,7 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
                 photos: [...state.photos, newPhoto],
             };
         }
-        case 'UPDATE_HEADER_PHOTO': {
+        case 'MAIN/UPDATE_HEADER_PHOTO': {
             const newHeaderPhoto = {
                 phLink: action.phLink,
                 phNames: action.phNames,
@@ -64,9 +63,8 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
                 headerPhoto: newHeaderPhoto
             };
         }
-        case 'UPDATE_ARRAY_PHOTOS': {
+        case 'MAIN/UPDATE_ARRAY_PHOTOS': {
             const isUnique = isUniquePhoto(state.photos[state.photos.length - 1], action.photos[action.photos.length - 1]);
-            console.log(isUnique);
             if(isUnique) {
                 return {
                     ...state,
@@ -75,11 +73,18 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
             }
             return state;
         }
-        case 'SET_RECOMMEND_CATEGORIES': {
-            console.log(action.categories);
+        case 'MAIN/SET_RECOMMEND_CATEGORIES': {
             return {
                 ...state,
                 recommendCategories: [...action.categories]
+            };
+        }
+        case 'MAIN/SET_CURATED_PAGE_INDEX': {
+            initialState.curatedPageIndex = action.page;
+
+            return {
+                ...state,
+                curatedPageIndex: action.page
             };
         }
         default:
@@ -87,17 +92,12 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
     }
 }
 
-export const getPhoto = (query: string): ThunkType => async (dispatch) => {
-    const photoData = await photoAPI.getPhoto(query);
-    if (Boolean(photoData)) {
-        console.log(photoData)
-        // dispatch(actions.setAuthUserData(id, email, login, true))
-    }
-}
-
-// export const setRecommendCategories = (): ThunkType => async (dispatch) => {
-//     const recommendCategories = getRandomArray(mainCategories.length, 7, mainCategories);
-//     dispatch(actions.setRecommendCategories(recommendCategories));
+// export const getPhoto = (query: string): ThunkType => async (dispatch) => {
+//     const photoData = await photoAPI.getPhoto(query);
+//     if (Boolean(photoData)) {
+//         console.log(photoData)
+//         // dispatch(actions.setAuthUserData(id, email, login, true))
+//     }
 // }
 
 export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
@@ -107,23 +107,25 @@ export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
         const indexPhoto = getRandomInt(data?.photos.length);
         // @ts-ignore
         const photo = data?.photos[indexPhoto];
-        const photographer_url = photo.photographer_url || initialState.headerPhoto.phLink;
-        const photographer = photo.photographer || initialState.headerPhoto.phNames;
+        const photographerUrl = photo?.photographer_url || initialState.headerPhoto.phLink;
+        const photographer = photo?.photographer || initialState.headerPhoto.phNames;
         const src = photo.src.landscape || initialState.headerPhoto.src;
 
-        dispatch(actions.setHeaderPhoto(photographer_url, src, photographer));
+        dispatch(actions.setHeaderPhoto(photographerUrl, src, photographer));
     }
 }
 
-let curatedPageIndex: number = 0
 
 export const updateArrayPhotos = (page: number = 1): ThunkType => async (dispatch) => {
+    const curatedPageIndex = initialState.curatedPageIndex;
+
     if (page !== curatedPageIndex) {
         const data = await photoAPI.getCuratedPhoto(page);
+
         if (Boolean(data)) {
             const photos = photoEditing(data);
             dispatch(actions.updateArrayPhotos(photos));
-            curatedPageIndex = page;
+            dispatch(actions.setCuratedPageIndex(page));
         }
     }
 }

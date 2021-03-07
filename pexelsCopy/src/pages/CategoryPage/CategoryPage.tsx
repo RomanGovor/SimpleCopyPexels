@@ -1,26 +1,24 @@
 import React, {useEffect, useState} from "react";
-import './HomePage.scss';
-import {InitialStateType, updateArrayPhotos} from "../../redux/homeReducer";
-import UnderlinedTabs from "../../components/UnderlinedTabs/UnderlinedTabs";
-import TitleTabs from "./TitleTabs/TitleTabs";
+import {InitialStateType, updateCategoriesArrayPhotos} from "../../redux/categoryReducer";
+import {withSuspense} from "../../components/common/Suspense/withSuspense";
+import Navbar from "../../components/Navigation/Navbar";
+import './CategoryPage.scss'
 import {useDispatch} from "react-redux";
 import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
 import Preloader from "../../components/common/Preloader/Preloader";
-import {withSuspense} from "../../components/common/Suspense/withSuspense";
-import Navbar from "../../components/Navigation/Navbar";
 
 type PropsType = {
-    homePage: InitialStateType
+    categoryPage: InitialStateType,
+    query: string
 }
 
 const Photos = React.lazy(() => import('../../components/Photos/Photos'));
-const Header = React.lazy(() => import('../../components/Header/Header'));
-
 const SuspendedPhotos = withSuspense(Photos);
-const SuspendedHeader = withSuspense(Header);
 
-const HomePage: React.FC<PropsType> = (props) => {
-    const {photos, headerPhoto, maxCountOfColumns, recommendCategories} = props.homePage;
+const CategoryPage: React.FC<PropsType> = (props) => {
+    const {photos, maxCountOfColumns} = props.categoryPage;
+    const query = props.query;
+    const title = photos.length === 0 ? `We Couldn't Find Anything For “${query}”` : query;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetching, setFetching] = useState(true);
@@ -36,7 +34,7 @@ const HomePage: React.FC<PropsType> = (props) => {
 
     useEffect(() => {
         if (isFetching) {
-            dispatch(updateArrayPhotos(currentPage));
+            dispatch(updateCategoriesArrayPhotos(currentPage, query));
             setCurrentPage(prevState => prevState + 1);
             setFetching(false);
         }
@@ -49,18 +47,21 @@ const HomePage: React.FC<PropsType> = (props) => {
         }
     }, []);
 
+
     return (
         <>
-            <Navbar isMain={true}/>
-            <SuspendedHeader headerPhoto={headerPhoto} recommendCategories={recommendCategories}/>
-            <UnderlinedTabs />
-            <div className={'container home-page'}>
-                <TitleTabs />
-                <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
-                {!isFetching ? <Preloader /> : null}
+            <Navbar isMain={false}/>
+            <div className={'category'}>
+                <section className={'category__header'}>
+                    <h1 className={'category__header__title'}>{title}</h1>
+                </section>
+                <section className={'category__grid'}>
+                    <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
+                    {!isFetching ? <Preloader /> : null}
+                </section>
             </div>
         </>
     );
 }
 
-export default HomePage;
+export default CategoryPage;

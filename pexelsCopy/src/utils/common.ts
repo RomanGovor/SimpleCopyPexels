@@ -1,4 +1,5 @@
 import {IHeaderContentItem} from "../types/commonTypes";
+import {MAX_COUNT_PAGE} from "./constants/constants";
 
 type RandomArrayType = Array<IHeaderContentItem> | Array<number> | undefined;
 

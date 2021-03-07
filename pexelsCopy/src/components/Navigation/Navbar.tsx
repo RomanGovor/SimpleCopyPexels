@@ -4,7 +4,11 @@ import logo from '../../assets/icons/pexels.svg'
 import NavList from "./NavList/NavList";
 import SearchBar from "../SearchBar/SearchBar";
 
-const Navbar: React.FunctionComponent = () => {
+type PropsType = {
+    isMain: boolean
+}
+
+const Navbar: React.FunctionComponent<PropsType> = (props) => {
     const [scrollTop, setScrollTop] = useState(0)
 
     document.addEventListener('scroll', () => {
@@ -22,7 +26,7 @@ const Navbar: React.FunctionComponent = () => {
     }, [scrollTop]);
 
     return (
-        <nav className={`navigation ${isTransparent ? 'navigation__transparent' : ''}`}>
+        <nav className={`navigation ${props.isMain && isTransparent ? 'navigation__transparent' : ''}`}>
             <a className={'navigation__logo'} href={'/'}>
                 <div className={'navigation__logo__img'}>
                     <img src={logo}/>

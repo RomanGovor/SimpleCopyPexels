@@ -4,8 +4,6 @@ import {ArrColumnsType, PhotoCardType} from "../../types/commonTypes";
 import PhotoCard from "./PhotosColumn/PhotoCard/PhotoCard";
 import PhotosColumn from "./PhotosColumn/PhotosColumn";
 import {generatePhotoColumns} from "../../utils/generatePhotoColumns";
-import {useDispatch} from "react-redux";
-import {getPhoto} from "../../redux/homeReducer";
 
 
 type PropsType = {
@@ -62,14 +60,6 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns}) => {
        // return window.removeEventListener('resize', controlResize);
     }, [])
 
-
-
-    // const dispatch = useDispatch();
-    //
-    // const onclick = () => {
-    //     dispatch(getPhoto('Nature'));
-    // }
-
     return (
         <div className={'photos'}>
             {columns}
@@ -78,3 +68,80 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns}) => {
 }
 
 export default Photos;
+
+
+
+
+
+
+
+
+
+
+// import {AppStateType} from "../../redux/store";
+// import {compose} from "redux";
+// import {connect, useDispatch} from "react-redux";
+// // import {actions} from "../../redux/homeReducer";
+// import React, {useEffect, useState} from "react";
+// import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
+// import {updateArrayPhotos} from "../../redux/homeReducer";
+// import {withSuspense} from "../common/Suspense/withSuspense";
+// import {commonStateType} from "../../types/commonTypes";
+//
+// type mapStateType = {
+//     initialPage: commonStateType,
+//
+// }
+//
+// type PropsType = mapStateType;
+//
+//
+// const Photos = React.lazy(() => import('./Photos'));
+// const SuspendedPhotos = withSuspense(Photos);
+//
+// const PhotosContainer:React.FC<PropsType> = (props) => {
+//     const {photos, maxCountOfColumns} = props.initialPage;
+//
+//     const [currentPage, setCurrentPage] = useState(1);
+//     const [isFetching, setFetching] = useState(true);
+//
+//     const dispatch = useDispatch();
+//
+//     const scrollHandler = (event: any) => {
+//         if (event.target.documentElement.scrollHeight - (event.target.documentElement.scrollTop + window.innerHeight) < 100
+//             && currentPage < MAX_COUNT_PAGE) {
+//             setFetching(true);
+//         }
+//     }
+//
+//     useEffect(() => {
+//         if (isFetching) {
+//             dispatch(updateArrayPhotos(currentPage));
+//             setCurrentPage(prevState => prevState + 1);
+//             setFetching(false);
+//         }
+//     }, [isFetching]);
+//
+//     useEffect(() => {
+//         document.addEventListener('scroll', scrollHandler);
+//         return function () {
+//             document.removeEventListener('scroll', scrollHandler);
+//         }
+//     }, []);
+//
+//
+//     return (
+//         <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
+//     )
+// }
+//
+// const mapStateToProps = (state: AppStateType) => {
+//     return {
+//         initialPage: state.categoryPage
+//     }
+// }
+//
+// export default compose<React.ComponentType>(
+//     connect(mapStateToProps, {...actions})
+// )(PhotosContainer);
+
