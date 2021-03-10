@@ -6,6 +6,8 @@ import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
 import {mainCategories} from "./utils/constants/constants";
 import {Redirect, Route, Switch} from 'react-router-dom'
+import {getLikes} from "./utils/storage";
+import {actionsCommon} from "./redux/commonReducer";
 
 
 const HomePageContainer = React.lazy(() => import('./pages/HomePage/HomePageContainer'));
@@ -22,6 +24,10 @@ const App: React.FC = () => {
 
         const recommendCategories = getRandomArray(mainCategories.length, 7, mainCategories);
         dispatch(actions.setRecommendCategories(recommendCategories));
+
+        const likes = getLikes();
+        dispatch(actionsCommon.setLikedPhotos(likes));
+
     }, [])
 
     return (

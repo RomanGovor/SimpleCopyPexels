@@ -17,8 +17,6 @@ export function photoEditing(data: Photos | ErrorResponse): Array<PhotoCardType>
         photos.push(obj);
     });
 
-    console.log(photos);
-
     return photos;
 }
 

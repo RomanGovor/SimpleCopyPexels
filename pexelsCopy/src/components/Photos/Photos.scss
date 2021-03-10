@@ -1,21 +1,12 @@
 @import "../../sass/abstract/constants";
-
 .photos {
   display: -webkit-box;
   display: flex;
-  //flex-wrap: wrap;
-  //align-items: center;
-  //justify-content: center;
-  //flex-direction: column;
   width: 100%;
   position: relative;
 
   .photo-card {
     margin-bottom: 20px;
-
-    //min-width: 300px;       //
-    //max-width: 420px;       //
-    //margin-right: 1.45rem;  //
   }
 
   .hide-featured-badge .featured-badge {
@@ -43,9 +34,8 @@
   }
 
   &__column {
-    //display: block;
-    display: flex;           ///////////
-    flex-direction: column; //////////
+    display: flex;
+    flex-direction: column;
 
     flex-basis: 0;
     -webkit-box-flex: 1;
@@ -74,7 +64,6 @@
     }
 
     &__link {
-      //position: absolute;
       top: 0;
       left: 0;
       bottom: 0;

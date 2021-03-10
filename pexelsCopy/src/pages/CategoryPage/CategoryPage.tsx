@@ -6,10 +6,12 @@ import './CategoryPage.scss'
 import {useDispatch} from "react-redux";
 import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
 import Preloader from "../../components/common/Preloader/Preloader";
+import {LikesArrayType} from "../../types/commonTypes";
 
 type PropsType = {
     categoryPage: InitialStateType,
-    query: string
+    query: string,
+    likedPhotosArray: LikesArrayType
 }
 
 const Photos = React.lazy(() => import('../../components/Photos/Photos'));
@@ -19,6 +21,7 @@ const CategoryPage: React.FC<PropsType> = (props) => {
     const {photos, maxCountOfColumns} = props.categoryPage;
     const query = props.query;
     const title = photos.length === 0 ? `We Couldn't Find Anything For “${query}”` : query;
+    const likedPhotos = props.likedPhotosArray;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetching, setFetching] = useState(true);
@@ -56,7 +59,7 @@ const CategoryPage: React.FC<PropsType> = (props) => {
                     <h1 className={'category__header__title'}>{title}</h1>
                 </section>
                 <section className={'category__grid'}>
-                    <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
+                    <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns} likedPhotosArray={likedPhotos}/>
                     {!isFetching ? <Preloader /> : null}
                 </section>
             </div>

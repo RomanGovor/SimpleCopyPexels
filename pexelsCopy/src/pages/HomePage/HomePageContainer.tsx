@@ -7,7 +7,8 @@ import React from "react";
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        homePage: state.homePage
+        homePage: state.homePage,
+        common: state.common
     }
 }
 

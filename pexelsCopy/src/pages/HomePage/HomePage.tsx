@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import './HomePage.scss';
 import {InitialStateType, updateArrayPhotos} from "../../redux/homeReducer";
+import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
+
 import UnderlinedTabs from "../../components/UnderlinedTabs/UnderlinedTabs";
 import TitleTabs from "./TitleTabs/TitleTabs";
 import {useDispatch} from "react-redux";
@@ -10,7 +12,8 @@ import {withSuspense} from "../../components/common/Suspense/withSuspense";
 import Navbar from "../../components/Navigation/Navbar";
 
 type PropsType = {
-    homePage: InitialStateType
+    homePage: InitialStateType,
+    common: CommonStateType
 }
 
 const Photos = React.lazy(() => import('../../components/Photos/Photos'));
@@ -21,6 +24,7 @@ const SuspendedHeader = withSuspense(Header);
 
 const HomePage: React.FC<PropsType> = (props) => {
     const {photos, headerPhoto, maxCountOfColumns, recommendCategories} = props.homePage;
+    const likedPhotosArray: Array<number> = props.common.likedPhotos;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetching, setFetching] = useState(true);
@@ -56,7 +60,7 @@ const HomePage: React.FC<PropsType> = (props) => {
             <UnderlinedTabs />
             <div className={'container home-page'}>
                 <TitleTabs />
-                <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
+                <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns} likedPhotosArray={likedPhotosArray}/>
                 {!isFetching ? <Preloader /> : null}
             </div>
         </>

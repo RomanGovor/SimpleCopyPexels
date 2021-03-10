@@ -21,3 +21,5 @@ export type ArrColumnsType = {
 }
 
 export type commonStateType = homeStateType & categoryStateType;
+
+export type LikesArrayType = Array<number> | never[];

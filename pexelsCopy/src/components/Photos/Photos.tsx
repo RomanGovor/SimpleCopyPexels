@@ -1,27 +1,37 @@
-import React, {useEffect, useState} from "react";
+import React, {MouseEventHandler, useEffect, useState} from "react";
 import './Photos.scss'
-import {ArrColumnsType, PhotoCardType} from "../../types/commonTypes";
+import {ArrColumnsType, LikesArrayType, PhotoCardType} from "../../types/commonTypes";
 import PhotoCard from "./PhotosColumn/PhotoCard/PhotoCard";
 import PhotosColumn from "./PhotosColumn/PhotosColumn";
 import {generatePhotoColumns} from "../../utils/generatePhotoColumns";
+import {getLikes, togglePhotoLike} from "../../utils/storage";
+import {useDispatch} from "react-redux";
+import {actionsCommon} from "../../redux/commonReducer";
 
 
 type PropsType = {
     photos: Array<PhotoCardType>,
-    maxCountOfColumns: number
+    maxCountOfColumns: number,
+    likedPhotosArray: Array<number>
 }
 
-const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardType>): Array<JSX.Element | undefined> => {
+const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardType>, likes: LikesArrayType): Array<JSX.Element | undefined> => {
     const columns: Array<JSX.Element | undefined>= [];
 
     for (let i = 0; i < arrColumns.length; i++) {
         const photosColumn = arrColumns[i].photos.map((index) => {
+
+            // @ts-ignore
+            const photoId: number & never = photos[index].photoId
+            const isLiked = likes.includes(photoId);
+
             return <PhotoCard src={photos[index].src}
                               phLink={photos[index].phLink}
                               phNames={photos[index].phNames}
                               phPhotoLink={photos[index].phPhotoLink}
-                              photoId={photos[index].photoId}/>
-        })
+                              photoId={photos[index].photoId}
+                              isLiked={isLiked} />
+        });
 
         columns.push(<PhotosColumn photosElems={photosColumn} /> )
     }
@@ -29,12 +39,12 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
     return columns;
 }
 
-const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns}) => {
+const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArray}) => {
     const [widthWindow, setWidthWindow] = useState(window.screen.width);
     const [countColumn, setCountColumn] = useState(maxCountOfColumns);
 
     const arrColumns = generatePhotoColumns(countColumn, photos);
-    const columns: Array<JSX.Element | undefined> = getColumn(arrColumns, photos);
+    const columns: Array<JSX.Element | undefined> = getColumn(arrColumns, photos, likedPhotosArray);
 
     const controlResize = (maxColumns: number): void => {
         const temp = document.body.clientWidth;
@@ -61,10 +71,25 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns}) => {
             controlResize(maxCountOfColumns);
         });
        // return window.removeEventListener('resize', controlResize);
-    }, [])
+    }, []);
+
+    const dispatch = useDispatch();
+
+    const onClick = (event: any): void => {
+        const target = event.target.closest('button');
+        if (target.classList.contains('js-like')) {
+            const photoId: number = +(target.getAttribute('data-photoId'));
+
+            // @ts-ignore
+            togglePhotoLike(photoId)
+            const likes = getLikes();
+
+            dispatch(actionsCommon.setLikedPhotos(likes))
+        }
+    }
 
     return (
-        <div className={'photos'}>
+        <div className={'photos'} onClick={onClick}>
             {columns}
         </div>
     )

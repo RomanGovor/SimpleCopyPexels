@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {PhotoCardType} from "../../../../types/commonTypes";
 
 import favoriteIcon from '../../../../assets/icons/favorite-icon.svg';
@@ -11,17 +11,15 @@ import downloadIcon from '../../../../assets/icons/download.svg';
 
 import './badge.scss'
 
-const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames, photoId}) => {
-    const img = new Image();
-    img.src = src;
+type PropsType = {
+    isLiked: boolean
+}
 
-    // const calcAttitudeImg: number = img.height / img.width * 100;
-
-    console.log(photoId, phNames);
+const PhotoCard: React.FC<PhotoCardType & PropsType> = ({src, phLink,phPhotoLink,phNames, photoId, isLiked}) => {
 
     return (
         <div className={'photo-card hide-featured-badge hide-favorite-badge'}>
-            <article className={'photo-item photo-item--overlay'}>
+            <article className={'photo-item photo-item--overlay'} data-photoId={photoId}>
                 <a target={'_blank'} href={'/'} className={'photo-item__link'}>
                     <img src={src} className={'photo-item__img'}/>
                     <div className={'badge-container'}>
@@ -52,13 +50,15 @@ const PhotoCard: React.FC<PhotoCardType> = ({src, phLink,phPhotoLink,phNames, ph
                             <img src={successIcon}/>
                         </i>
                     </button>
-                    <button className={'js-like rd__button rd__button--like rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
-                        <i className={'rd__button--like--not-active--icon svg-icon'}>
-                            <img src={heartIcon}/>
-                        </i>
-                        <i className={'rd__button--like--active--icon svg-icon none'}>
+                    <button data-photoId={photoId} className={'js-like rd__button rd__button--like rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
+                        {isLiked && <i className={'rd__button--like--active--icon svg-icon'}>
                             <img src={fullHeartIcon}/>
                         </i>
+                        }
+                        {!isLiked && <i className={'rd__button--like--active--icon svg-icon'}>
+                                <img src={heartIcon}/>
+                        </i>
+                        }
                     </button>
                 </div>
             </article>
