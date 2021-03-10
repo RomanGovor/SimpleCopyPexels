@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
-import Navbar from "./components/Navigation/Navbar";
 import {useDispatch} from "react-redux";
 import {actions, setHeaderPhoto} from "./redux/homeReducer";
 import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
-import {mainCategories} from "./utils/constants/constants";
+import {mainCategories, trendingCategories} from "./utils/constants/constants";
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {getLikes} from "./utils/storage";
+import {getLikes} from "./utils/storage/storagePhotoLikes";
 import {actionsCommon} from "./redux/commonReducer";
+import {getResentWords} from "./utils/storage/storageRecentWords";
 
 
 const HomePageContainer = React.lazy(() => import('./pages/HomePage/HomePageContainer'));
@@ -25,8 +25,14 @@ const App: React.FC = () => {
         const recommendCategories = getRandomArray(mainCategories.length, 7, mainCategories);
         dispatch(actions.setRecommendCategories(recommendCategories));
 
+        const trendingSearches = getRandomArray(trendingCategories.length, 10, trendingCategories);
+        dispatch(actionsCommon.setTrendingCategories(trendingSearches));
+
         const likes = getLikes();
         dispatch(actionsCommon.setLikedPhotos(likes));
+
+        const resentSearches = getResentWords();
+        dispatch(actionsCommon.setResentSearches(resentSearches));
 
     }, [])
 

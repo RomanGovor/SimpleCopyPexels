@@ -1,0 +1,58 @@
+@import "../abstract/constants";
+
+.image-tag {
+  display: block;
+  font-size: 15px;
+  line-height: 25px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  background: $color-white;
+  border-radius: 20px;
+  box-shadow: 0 3px 5px 0 rgba(0,0,0,.08);
+  color: $color-search-bar-grey;
+  padding: .4rem;
+  padding-right: 1.85rem;
+  text-decoration: none;
+  text-transform: capitalize;
+  -webkit-transition: .1s all ease;
+  transition: .1s all ease;
+
+  &:hover,
+  &:focus {
+    background: $color-dropdown-li-background;
+    box-shadow: none
+  }
+
+  &--compact {
+    display: block;
+    font-size: 14px;
+    line-height: 23px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    padding: .35rem;
+    padding-right: 1.25rem;
+
+    .image-tag__img {
+      width: 30px;
+      height: 30px;
+      margin-right: .75rem;
+    }
+  }
+
+  &__img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    background-position: center;
+    background-size: cover;
+  }
+}

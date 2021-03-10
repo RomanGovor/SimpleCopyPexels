@@ -4,7 +4,7 @@ import {ArrColumnsType, LikesArrayType, PhotoCardType} from "../../types/commonT
 import PhotoCard from "./PhotosColumn/PhotoCard/PhotoCard";
 import PhotosColumn from "./PhotosColumn/PhotosColumn";
 import {generatePhotoColumns} from "../../utils/generatePhotoColumns";
-import {getLikes, togglePhotoLike} from "../../utils/storage";
+import {getLikes, togglePhotoLike} from "../../utils/storage/storagePhotoLikes";
 import {useDispatch} from "react-redux";
 import {actionsCommon} from "../../redux/commonReducer";
 
@@ -26,11 +26,12 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
             const isLiked = likes.includes(photoId);
 
             return <PhotoCard src={photos[index].src}
+                              key={photos[index].photoId}
                               phLink={photos[index].phLink}
                               phNames={photos[index].phNames}
                               phPhotoLink={photos[index].phPhotoLink}
                               photoId={photos[index].photoId}
-                              isLiked={isLiked} />
+                              isLiked={isLiked}/>
         });
 
         columns.push(<PhotosColumn photosElems={photosColumn} /> )
@@ -77,7 +78,7 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArra
 
     const onClick = (event: any): void => {
         const target = event.target.closest('button');
-        if (target.classList.contains('js-like')) {
+        if (target?.classList?.contains('js-like')) {
             const photoId: number = +(target.getAttribute('data-photoId'));
 
             // @ts-ignore

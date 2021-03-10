@@ -6,12 +6,12 @@ import './CategoryPage.scss'
 import {useDispatch} from "react-redux";
 import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
 import Preloader from "../../components/common/Preloader/Preloader";
-import {LikesArrayType} from "../../types/commonTypes";
+import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
 
 type PropsType = {
     categoryPage: InitialStateType,
     query: string,
-    likedPhotosArray: LikesArrayType
+    common: CommonStateType
 }
 
 const Photos = React.lazy(() => import('../../components/Photos/Photos'));
@@ -21,7 +21,8 @@ const CategoryPage: React.FC<PropsType> = (props) => {
     const {photos, maxCountOfColumns} = props.categoryPage;
     const query = props.query;
     const title = photos.length === 0 ? `We Couldn't Find Anything For “${query}”` : query;
-    const likedPhotos = props.likedPhotosArray;
+
+    const likedPhotos = props.common.likedPhotos;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetching, setFetching] = useState(true);
@@ -53,7 +54,7 @@ const CategoryPage: React.FC<PropsType> = (props) => {
 
     return (
         <>
-            <Navbar isMain={false}/>
+            <Navbar isMain={false} common={props.common}/>
             <div className={'category'}>
                 <section className={'category__header'}>
                     <h1 className={'category__header__title'}>{title}</h1>

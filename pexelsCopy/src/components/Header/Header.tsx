@@ -2,10 +2,12 @@ import React from "react";
 import './header.scss';
 import HeaderContent from "./HeaderContent/HeaderContent";
 import {IHeaderContentItem, PhotoCardType} from "../../types/commonTypes";
+import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
 
 type PropsType = {
     headerPhoto: PhotoCardType,
     recommendCategories: Array<IHeaderContentItem>
+    common: CommonStateType
 }
 
 const Header: React.FunctionComponent<PropsType> = (props) => {
@@ -22,7 +24,7 @@ const Header: React.FunctionComponent<PropsType> = (props) => {
                        target={'_blank'}>Photo by {headerPhoto.phNames}</a>
                 </div>
             </div>
-            <HeaderContent recommendCategories={recommendCategories}/>
+            <HeaderContent recommendCategories={recommendCategories} common={props.common}/>
         </header>
     )
 }

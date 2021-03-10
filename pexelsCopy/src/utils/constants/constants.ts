@@ -1,6 +1,19 @@
-import {IHeaderContentItem, PhotoCardType} from "../../types/commonTypes";
+import {IHeaderContentItem, PhotoCardType, TrendingSearchesType} from "../../types/commonTypes";
 import defaultAvatar from "../../assets/images/default-avatar.svg";
 import defaultImg from "../../assets/images/defaultImages/image-1.jpeg";
+import lakeImg from "../../assets/images/trendingImages/lake.jpeg";
+import fruitsImg from "../../assets/images/trendingImages/fruits.jpeg";
+import talkingImg from "../../assets/images/trendingImages/talking.jpeg";
+import conversationImg from "../../assets/images/trendingImages/conversation.jpeg";
+import elephantImg from "../../assets/images/trendingImages/elephant.jpeg";
+import facebookImg from "../../assets/images/trendingImages/facebook.jpeg";
+import planImg from "../../assets/images/trendingImages/plan.jpeg";
+import leadershipImg from "../../assets/images/trendingImages/leadership.jpeg";
+import jungleImg from "../../assets/images/trendingImages/jungle.jpeg";
+import parisImg from "../../assets/images/trendingImages/pairs.jpeg";
+import dancingImg from "../../assets/images/trendingImages/dancing.jpeg";
+import holdingImg from "../../assets/images/trendingImages/holding-hands.jpeg";
+import innovationImg from "../../assets/images/trendingImages/innovation.jpeg";
 
 
 export const MAX_COUNT_PAGE: number = 80;
@@ -12,6 +25,22 @@ export const defaultPhotoParameters: PhotoCardType = {
     phLink: 'https://www.pexels.com/@kira-schwarz',
     photoId: 2880507
 };
+
+export const trendingCategories: Array<TrendingSearchesType> = [
+    {word: 'lake', img: lakeImg },
+    {word: 'fruits', img: fruitsImg },
+    {word: 'talking', img: talkingImg },
+    {word: 'conversation', img: conversationImg },
+    {word: 'elephant', img: elephantImg },
+    {word: 'facebook', img: facebookImg },
+    {word: 'plan', img: planImg },
+    {word: 'leadership', img: leadershipImg },
+    {word: 'jungle', img: jungleImg },
+    {word: 'pairs', img: parisImg },
+    {word: 'dancing', img: dancingImg },
+    {word: 'holding hands', img: holdingImg },
+    {word: 'innovation', img: innovationImg }
+]
 
 export const mainCategories: Array<IHeaderContentItem> = [
     {link: 'nature', category: 'nature'},

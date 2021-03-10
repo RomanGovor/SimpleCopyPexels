@@ -10,6 +10,7 @@ import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
 import Preloader from "../../components/common/Preloader/Preloader";
 import {withSuspense} from "../../components/common/Suspense/withSuspense";
 import Navbar from "../../components/Navigation/Navbar";
+import {ISearchBarType} from "../../types/commonTypes";
 
 type PropsType = {
     homePage: InitialStateType,
@@ -55,8 +56,8 @@ const HomePage: React.FC<PropsType> = (props) => {
 
     return (
         <>
-            <Navbar isMain={true}/>
-            <SuspendedHeader headerPhoto={headerPhoto} recommendCategories={recommendCategories}/>
+            <Navbar isMain={true} common={props.common}/>
+            <SuspendedHeader headerPhoto={headerPhoto} recommendCategories={recommendCategories} common={props.common}/>
             <UnderlinedTabs />
             <div className={'container home-page'}>
                 <TitleTabs />

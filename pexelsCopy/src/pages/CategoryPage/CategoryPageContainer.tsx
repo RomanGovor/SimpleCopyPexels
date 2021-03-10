@@ -5,17 +5,16 @@ import {actions} from "../../redux/homeReducer";
 import CategoryPage from "./CategoryPage";
 import {withRouter, RouteComponentProps} from "react-router-dom";
 import React, {useEffect} from "react";
-import {actionsCategories, InitialStateType} from "../../redux/categoryReducer";
+import {actionsCategories, InitialStateType as CategoryStateType} from "../../redux/categoryReducer";
 import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
-import {prependOnceListener} from "cluster";
 
 type mapStateType = {
-    categoryPage: InitialStateType,
+    categoryPage: CategoryStateType,
     common: CommonStateType
 }
 
 type PathParamsType = {
-    query: string,
+    query: string
 }
 
 type PropsType = mapStateType & RouteComponentProps<PathParamsType>;
@@ -38,16 +37,17 @@ const CategoryPageContainer: React.FC<PropsType> = (props) => {
     }).join('');
 
     return (
-        <CategoryPage {...props}
+        <CategoryPage categoryPage={props.categoryPage}
                       query={query}
-                      likedPhotosArray={props.common.likedPhotos}
+                      common={props.common}
         />
     )
 }
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        categoryPage: state.categoryPage
+        categoryPage: state.categoryPage,
+        common: state.common
     }
 }
 

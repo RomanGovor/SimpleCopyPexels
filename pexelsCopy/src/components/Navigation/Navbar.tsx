@@ -3,13 +3,16 @@ import './navbar.scss'
 import logo from '../../assets/icons/pexels.svg'
 import NavList from "./NavList/NavList";
 import SearchBar from "../SearchBar/SearchBar";
+import {ISearchBarType} from "../../types/commonTypes";
+import {actionsCommon, InitialStateType as CommonStateType} from "../../redux/commonReducer";
 
 type PropsType = {
-    isMain: boolean
+    isMain: boolean,
+    common: CommonStateType
 }
 
 const Navbar: React.FunctionComponent<PropsType> = (props) => {
-    const [scrollTop, setScrollTop] = useState(0)
+    const [scrollTop, setScrollTop] = useState(0);
 
     document.addEventListener('scroll', () => {
         const temp = window.pageYOffset;
@@ -25,6 +28,15 @@ const Navbar: React.FunctionComponent<PropsType> = (props) => {
         if(scrollTop <= 50 && !isTransparent) setIsTransparent(true);
     }, [scrollTop]);
 
+    const SearchProps: ISearchBarType = {
+        suggestionWords: props.common.suggestionWords,
+        resentSearches: props.common.resentSearches,
+        trendingSearches: props.common.trendingSearches,
+        value: props.common.navInputValue,
+        isBigSearchBar: false,
+        setInput: actionsCommon.setNavInputValue
+    }
+
     return (
         <nav className={`navigation ${props.isMain && isTransparent ? 'navigation__transparent' : ''}`}>
             <a className={'navigation__logo'} href={'/'}>
@@ -34,7 +46,7 @@ const Navbar: React.FunctionComponent<PropsType> = (props) => {
                 <div className={'navigation__logo__text'}>Pexels</div>
             </a>
             <div className={'navigation__search-bar'}>
-                <SearchBar />
+                <SearchBar searchProps={SearchProps}/>
             </div>
             <NavList />
         </nav>

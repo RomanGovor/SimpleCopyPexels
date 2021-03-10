@@ -1,4 +1,4 @@
-import {LikesArrayType} from "../types/commonTypes";
+import {LikesArrayType} from "../../types/commonTypes";
 
 export function getLikes(): LikesArrayType {
     // @ts-ignore

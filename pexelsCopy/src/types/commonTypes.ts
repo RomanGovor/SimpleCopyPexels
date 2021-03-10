@@ -20,6 +20,22 @@ export type ArrColumnsType = {
     photos: Array<number>
 }
 
+export type TrendingSearchesType = {
+    word: string
+    img: string
+}
+
+export interface ISearchBarType {
+    isBigSearchBar?: boolean,
+    suggestionWords?: Array<string>,
+    resentSearches?: Array<string>,
+    trendingSearches: Array<TrendingSearchesType>,
+    value: string,
+    setInput: (value: string) => void
+}
+
 export type commonStateType = homeStateType & categoryStateType;
 
 export type LikesArrayType = Array<number> | never[];
+
+export type RecentSearchsType = Array<string> | never[];
