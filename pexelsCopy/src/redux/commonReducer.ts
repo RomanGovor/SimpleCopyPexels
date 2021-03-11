@@ -1,20 +1,28 @@
 import {InferActionsTypes, BaseThunkType} from './store';
-import {LikesArrayType, TrendingSearchesType} from "../types/commonTypes";
+import {LikesArrayType, PhotoCardType, TrendingSearchesType} from "../types/commonTypes";
 import {photoAPI, wordsAPI} from "../api/api";
-import {photoEditing} from "../utils/photoEditing";
-import {actions} from "./homeReducer";
 import {getRandomArray} from "../utils/common";
+import img1 from "../assets/images/defaultImages/image-1.jpeg";
 
 
 type ThunkType = BaseThunkType<ActionsType>
 
-const initialState = {
+export const initialState = {
     likedPhotos: [] as Array<number>,
     suggestionWords: [] as Array<string>,
     resentSearches: [] as Array<string>,
     trendingSearches: [] as Array<TrendingSearchesType>,
     headerInputValue: '' as string,
-    navInputValue: '' as string
+    navInputValue: '' as string,
+    photoModalCard: {
+        src: img1,
+        phNames: 'kira schwarz',
+        phPhotoLink: 'https://images.pexels.com/users/avatars/616468/kira-schwarz-869.jpeg?auto=compress&fit=crop&h=60&w=60',
+        phLink: 'https://www.pexels.com/@kira-schwarz',
+        photoId: 6868419,
+        isLiked: true
+    } as PhotoCardType,
+    isOpenModal: false
 };
 
 export const actionsCommon = {
@@ -30,6 +38,10 @@ export const actionsCommon = {
         ({type: 'COMMON/SET_NAV_INPUT_VALUE', value} as const),
     setSuggestionWords: (suggestionWords: Array<string>) =>
         ({type: 'COMMON/SET_SUGGESTION_WORDS', suggestionWords} as const),
+    setPhotoModalCard: (photoCard: PhotoCardType) =>
+        ({type: 'COMMON/SET_PHOTO_MODAL_CARD', photoCard} as const),
+    setOpenModalFlag: (isOpen: boolean) =>
+        ({type: 'COMMON/SET_OPEN_MODAL_FLAG', isOpen} as const),
 }
 
 
@@ -72,6 +84,20 @@ const commonReducer = (state = initialState, action: ActionsType): InitialStateT
             return {
                 ...state,
                 suggestionWords: [...action.suggestionWords]
+            }
+        }
+        case 'COMMON/SET_PHOTO_MODAL_CARD': {
+            console.log(action.photoCard);
+
+            return {
+                ...state,
+                photoModalCard: action.photoCard
+            }
+        }
+        case 'COMMON/SET_OPEN_MODAL_FLAG': {
+            return {
+                ...state,
+                isOpenModal: action.isOpen
             }
         }
         default:

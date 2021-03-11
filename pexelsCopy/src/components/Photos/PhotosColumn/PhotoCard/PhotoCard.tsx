@@ -20,7 +20,7 @@ const PhotoCard: React.FC<PhotoCardType & PropsType> = ({src, phLink,phPhotoLink
     return (
         <div className={'photo-card hide-featured-badge hide-favorite-badge'}>
             <article className={'photo-item photo-item--overlay'} data-photoId={photoId}>
-                <a target={'_blank'} href={'/'} className={'photo-item__link'}>
+                <a className={'photo-item__link'}>
                     <img src={src} className={'photo-item__img'}/>
                     <div className={'badge-container'}>
                         <span className={'favorite-badge'}>

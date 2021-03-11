@@ -12,6 +12,7 @@ export type PhotoCardType = {
     phPhotoLink?: string
     phNames: string
     photoId: number
+    isLiked?: boolean
 }
 
 export type ArrColumnsType = {

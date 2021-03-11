@@ -1,0 +1,74 @@
+@import "../abstract/constants";
+
+.rd__card {
+  border-radius: 4px;
+  border: 1px solid rgba(26,26,26,.15);
+  padding: 1.15rem;
+  background: $color-white;
+
+  &__title {
+    display: block;
+    font-size: 10px;
+    line-height: 19px;
+    font-weight: 300;
+    margin-top: 0;
+    letter-spacing: .4px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $color-search-bar-grey;
+    text-align: left;
+
+    &:not(:first-child) {
+      padding-top: .6rem;
+    }
+  }
+
+  &__section {
+    &:not(:last-child) {
+      margin-bottom: 1.15rem
+    }
+
+    &__content {
+      h3,
+      .h3 {
+        display: block;
+        font-size: 18px;
+        line-height: 26px;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 13px;
+
+        strong {
+          font-weight: 600;
+        }
+      }
+
+      small {
+        display: block;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 8px;
+
+        strong {
+          font-weight: 600;
+        }
+      }
+
+      a {
+        text-decoration: underline;
+      }
+
+      &>*.no-margin,
+      &>*:last-child {
+        margin-bottom: 0;
+      }
+
+      &>*.secondary {
+        color: $color-search-bar-grey;
+      }
+    }
+  }
+}

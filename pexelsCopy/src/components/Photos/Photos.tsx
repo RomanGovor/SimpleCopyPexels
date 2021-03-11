@@ -1,4 +1,4 @@
-import React, {MouseEventHandler, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Photos.scss'
 import {ArrColumnsType, LikesArrayType, PhotoCardType} from "../../types/commonTypes";
 import PhotoCard from "./PhotosColumn/PhotoCard/PhotoCard";
@@ -7,6 +7,7 @@ import {generatePhotoColumns} from "../../utils/generatePhotoColumns";
 import {getLikes, togglePhotoLike} from "../../utils/storage/storagePhotoLikes";
 import {useDispatch} from "react-redux";
 import {actionsCommon} from "../../redux/commonReducer";
+import {getPhotoCardById} from "../../utils/photoEditing";
 
 
 type PropsType = {
@@ -78,6 +79,8 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArra
 
     const onClick = (event: any): void => {
         const target = event.target.closest('button');
+        const article = event.target.closest('article');
+
         if (target?.classList?.contains('js-like')) {
             const photoId: number = +(target.getAttribute('data-photoId'));
 
@@ -86,6 +89,11 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArra
             const likes = getLikes();
 
             dispatch(actionsCommon.setLikedPhotos(likes))
+        } else if (article) {
+            const photoId: number = +(article.getAttribute('data-photoId'));
+
+            const photo = getPhotoCardById(photos, photoId);
+            dispatch(actionsCommon.setPhotoModalCard(photo));
         }
     }
 
@@ -97,15 +105,6 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArra
 }
 
 export default Photos;
-
-
-
-
-
-
-
-
-
 
 // import {AppStateType} from "../../redux/store";
 // import {compose} from "redux";

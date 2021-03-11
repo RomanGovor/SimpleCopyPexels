@@ -102,6 +102,7 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
 
 export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
     const data = await photoAPI.getHeaderPhoto();
+    let src;
     if (Boolean(data)) {
         // @ts-ignore
         const indexPhoto = getRandomInt(data?.photos.length);
@@ -109,7 +110,17 @@ export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
         const photo = data?.photos[indexPhoto];
         const photographerUrl = photo?.photographer_url || initialState.headerPhoto.phLink;
         const photographer = photo?.photographer || initialState.headerPhoto.phNames;
-        const src = photo.src.landscape || initialState.headerPhoto.src;
+
+        try {
+            src = (photo.src.landscape !== undefined || photo.src.original !== undefined)
+                ? (photo.src.landscape || photo.src.original)
+                : initialState.headerPhoto.src;
+        } catch (err) {
+            console.log(err);
+            console.log(data);
+
+            src = initialState.headerPhoto.src;
+        }
 
         dispatch(actions.setHeaderPhoto(photographerUrl, src, photographer));
     }

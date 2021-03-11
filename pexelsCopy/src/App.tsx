@@ -1,14 +1,21 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from "react-redux";
-import {actions, setHeaderPhoto} from "./redux/homeReducer";
+import React, {useEffect, useState} from 'react';
+import {connect, useDispatch} from "react-redux";
+import {actions, InitialStateType, setHeaderPhoto} from "./redux/homeReducer";
 import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
 import {mainCategories, trendingCategories} from "./utils/constants/constants";
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {getLikes} from "./utils/storage/storagePhotoLikes";
-import {actionsCommon} from "./redux/commonReducer";
+import {actionsCommon, initialState, InitialStateType as CommonStateType} from "./redux/commonReducer";
 import {getResentWords} from "./utils/storage/storageRecentWords";
+import Modal from "./components/Modal/Modal";
+import {AppStateType} from "./redux/store";
+import {compose} from "redux";
+import {isUniquePhoto} from "./utils/photoEditing";
 
+type PropsType = {
+    common: CommonStateType
+}
 
 const HomePageContainer = React.lazy(() => import('./pages/HomePage/HomePageContainer'));
 const CategoryPageContainer = React.lazy(() => import('./pages/CategoryPage/CategoryPageContainer'));
@@ -16,8 +23,9 @@ const CategoryPageContainer = React.lazy(() => import('./pages/CategoryPage/Cate
 const SuspendedHomePage = withSuspense(HomePageContainer);
 const SuspendedCategoryPage = withSuspense(CategoryPageContainer);
 
-const App: React.FC = () => {
+const App: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
+    const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         dispatch(setHeaderPhoto());
@@ -34,7 +42,15 @@ const App: React.FC = () => {
         const resentSearches = getResentWords();
         dispatch(actionsCommon.setResentSearches(resentSearches));
 
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (isUniquePhoto(props.common.photoModalCard, initialState.photoModalCard)) {
+            dispatch(actionsCommon.setOpenModalFlag(true));
+            setModalOpen(true);
+        }
+
+    }, [props.common.photoModalCard]);
 
     return (
         <div className="App">
@@ -51,8 +67,19 @@ const App: React.FC = () => {
                 <Route path='*'
                        render={() => <div>404 NOT FOUND</div>}/>
             </Switch>
+            <Modal isOpenModal={props.common.isOpenModal} photo={props.common.photoModalCard} />
         </div>
     );
 }
 
-export default App;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        common: state.common
+    }
+}
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {...actionsCommon})
+)(App);
+
+// export default App;

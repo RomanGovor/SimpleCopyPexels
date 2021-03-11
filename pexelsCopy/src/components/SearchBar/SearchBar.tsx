@@ -42,14 +42,13 @@ const SearchBar: React.FC<PropsType> = (props) => {
     }
 
     useEffect(() => {
-        document.addEventListener('scroll', keydownHandler);
+        document.addEventListener('keydown', keydownHandler);
         return function () {
-            document.removeEventListener('scroll', keydownHandler);
+            document.removeEventListener('keydown', keydownHandler);
         }
     }, []);
 
     useEffect(() => {
-        console.log(4);
         dispatch(setSuggestionWords(value));
     }, [value]);
 
@@ -71,7 +70,6 @@ const SearchBar: React.FC<PropsType> = (props) => {
     }
 
     const onFormBlur = () => {
-        console.log(1);
         setFormFocus(false);
     }
 

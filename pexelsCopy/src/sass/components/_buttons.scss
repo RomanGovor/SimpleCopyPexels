@@ -97,7 +97,37 @@
     box-shadow: none;
   }
 
+  &--circle-icon {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &--white {
+    background: #EEE;
+    color: #1a1a1a;
+    border-color: rgba(26,26,26,.15);
+    max-height: 40px;
+  }
+
   &:focus {
     outline: none;
+  }
+
+  &--text {
+    background: 0 0;
+    color: inherit;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &-group>*:not(.rd__dropdown):not(:last-child) {
+    margin-right: .6rem;
+  }
+
+  &--with-icon-left {
+    padding-top: .6rem;
+    padding-bottom: .6rem;
   }
 }
