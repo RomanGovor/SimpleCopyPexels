@@ -1,4 +1,4 @@
-import React, {createFactory, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Modal.scss';
 import './Photo-page.scss';
 import {PhotoCardType} from "../../types/commonTypes";
@@ -12,13 +12,15 @@ import {getLikes, togglePhotoLike} from "../../utils/storage/storagePhotoLikes";
 import {actionsCommon} from "../../redux/commonReducer";
 import {getCollectPhotos, toggleCollectPhoto} from "../../utils/storage/storagePhotoCollect";
 import {defaultPhotoParameters} from "../../utils/constants/constants";
+import {ModalLangType} from "../../types/langTypes";
 
 type PropsType = {
     photo: PhotoCardType,
     isOpenModal: boolean
+    vocabulary: ModalLangType
 }
 
-const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
+const Modal: React.FC<PropsType> = ({photo, isOpenModal, vocabulary}) => {
     const [isLiked, setLike] = useState(photo.isLiked);
     const [isCollect, setCollect] = useState(photo.isCollect);
 
@@ -33,6 +35,10 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
     useEffect(() => {
         setCollect(photo.isCollect);
         setLike(photo.isLiked);
+
+        if (photo.photoId === defaultPhotoParameters.photoId) {
+            dispatch(actionsCommon.setOpenModalFlag(false));
+        }
     }, [photo.photoId])
 
     const onLikeBtnClick = (): void => {
@@ -43,9 +49,6 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
     }
 
     const onCollectBtnClick = (): void => {
-        const collectPhotos1 = getCollectPhotos();
-        console.log(collectPhotos1);
-
         // @ts-ignore
         setCollect(toggleCollectPhoto(photo.photoId));
         const collectPhotos = getCollectPhotos();
@@ -74,7 +77,6 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
         dispatch(actionsCommon.setPhotoModalCard(defaultPhotoParameters));
         dispatch(actionsCommon.setOpenModalFlag(false));
     }
-
 
     return (
         <div className={'modal ' + ((isOpenModal) && ' modal--open ')}>
@@ -140,13 +142,13 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
                                                         <img src={collectIcon}/>
                                                     </i>
                                                 }
-                                                <span>Collect</span>
+                                                <span>{vocabulary.collect}</span>
                                             </button>
                                             <div className={'js-photo-page-action-buttons-download'}>
                                                 <div className={'rd__button-group rd__button-group--space-with-margin-left rd__button-group--bar rd__button-group--bar--border-between'}>
                                                     <a className={'js-download-a-tag rd__button rd__button--download'}
                                                        download href={`https://www.pexels.com/photo/${photo.photoId}/download/`}>
-                                                        <span>Free Download</span>
+                                                        <span>{vocabulary.download}</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -168,7 +170,7 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
                             <div className={'photo-page__photo-details-overview'}>
                                 <div className={'photo-page__visible-on-mobile'}>
                                     <div className={'rd__card'}>
-                                        <div className={'rd__card__title'}>Photographer</div>
+                                        <div className={'rd__card__title'}>{vocabulary.photographer}</div>
                                         <div className={'rd__card__section'}>
                                             <a className={'photo-page__mini-profile'} href={photo.phLink} target={'_blank'}>
                                                 <div className={'photo-page__mini-profile__avatar rd__avatar rd__avatar--large'}>

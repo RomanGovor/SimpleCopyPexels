@@ -42,3 +42,6 @@ export type LikesArrayType = Array<number> | never[];
 export type CollectArrayType = Array<number> | never[];
 
 export type RecentSearchsType = Array<string> | never[];
+
+
+

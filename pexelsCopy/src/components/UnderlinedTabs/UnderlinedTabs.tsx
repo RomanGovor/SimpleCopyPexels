@@ -1,14 +1,20 @@
 import React from "react";
 import './UnderlinedTabs.scss'
+import {NavLink} from "react-router-dom";
+import {UnderlineTabsLangType} from "../../types/langTypes";
 
-const UnderlinedTabs: React.FC = () => {
+type PropsType = {
+    vocabulary: UnderlineTabsLangType
+}
+
+const UnderlinedTabs: React.FC<PropsType> = ({vocabulary}) => {
     return (
         <div className={'underlined-tabs underlined-tabs--large underlined-tabs--centered underlined-tabs--shadow'}>
-            <a className={'underlined-tabs__tab underlined-tabs__tab--active'} href={'/'}>Home</a>
-            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/discover/'}>Discover</a>
-            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/videos/'}>Videos</a>
-            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/leaderboard/'}>Leaderboard</a>
-            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/challenges/'}>Challenges</a>
+            <a className={'underlined-tabs__tab underlined-tabs__tab--active'} href={'/'}>{vocabulary.home}</a>
+            <NavLink className={'underlined-tabs__tab'} to={'/collections'}>{vocabulary.collections}</NavLink>
+            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/videos/'}>{vocabulary.videos}</a>
+            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/leaderboard/'}>{vocabulary.leaderboard}</a>
+            <a className={'underlined-tabs__tab'} target={'_blank'} href={'https://www.pexels.com/challenges/'}>{vocabulary.challenges}</a>
         </div>
     );
 }

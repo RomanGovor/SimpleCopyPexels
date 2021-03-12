@@ -3,6 +3,11 @@ import {CollectArrayType, LikesArrayType, PhotoCardType, TrendingSearchesType} f
 import {photoAPI, wordsAPI} from "../api/api";
 import {getRandomArray} from "../utils/common";
 import img1 from "../assets/images/defaultImages/image-1.jpeg";
+import {VocabularyLangType} from "../types/langTypes";
+import {VocabularyEn} from "../utils/languages/en";
+import {VocabularyRu} from "../utils/languages/ru";
+import {VocabularyBy} from "../utils/languages/by";
+import {defaultPhotoParameters} from "../utils/constants/constants";
 
 
 type ThunkType = BaseThunkType<ActionsType>
@@ -15,15 +20,10 @@ export const initialState = {
     trendingSearches: [] as Array<TrendingSearchesType>,
     headerInputValue: '' as string,
     navInputValue: '' as string,
-    photoModalCard: {
-        src: img1,
-        phNames: 'kira schwarz',
-        phPhotoLink: 'https://images.pexels.com/users/avatars/616468/kira-schwarz-869.jpeg?auto=compress&fit=crop&h=60&w=60',
-        phLink: 'https://www.pexels.com/@kira-schwarz',
-        photoId: 6868419,
-        isLiked: true
-    } as PhotoCardType,
-    isOpenModal: false
+    photoModalCard: defaultPhotoParameters as PhotoCardType,
+    isOpenModal: false,
+    lang: 'en' as string,
+    vocabulary: VocabularyEn as VocabularyLangType
 };
 
 export const actionsCommon = {
@@ -45,6 +45,8 @@ export const actionsCommon = {
         ({type: 'COMMON/SET_PHOTO_MODAL_CARD', photoCard} as const),
     setOpenModalFlag: (isOpen: boolean) =>
         ({type: 'COMMON/SET_OPEN_MODAL_FLAG', isOpen} as const),
+    setLanguage: (lang: string) =>
+        ({type: 'COMMON/SET_LANGUAGE', lang} as const)
 }
 
 
@@ -96,8 +98,6 @@ const commonReducer = (state = initialState, action: ActionsType): InitialStateT
             }
         }
         case 'COMMON/SET_PHOTO_MODAL_CARD': {
-            console.log(action.photoCard);
-
             return {
                 ...state,
                 photoModalCard: action.photoCard
@@ -107,6 +107,30 @@ const commonReducer = (state = initialState, action: ActionsType): InitialStateT
             return {
                 ...state,
                 isOpenModal: action.isOpen
+            }
+        }
+        case 'COMMON/SET_LANGUAGE': {
+            let vocabulary: VocabularyLangType;
+            switch (action.lang) {
+                case 'en':
+                    vocabulary = VocabularyEn
+                    break;
+                case 'ru':
+                    vocabulary = VocabularyRu
+                    break
+                case 'by':
+                    vocabulary = VocabularyBy
+                    break
+                default:
+                    vocabulary = VocabularyEn
+            }
+
+            console.log(vocabulary);
+
+            return {
+                ...state,
+                lang: action.lang,
+                vocabulary: vocabulary
             }
         }
         default:

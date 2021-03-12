@@ -10,13 +10,16 @@ import {useDispatch} from "react-redux";
 import {addResentWord} from "../../utils/storage/storageRecentWords";
 import {actionsCommon, setSuggestionWords} from "../../redux/commonReducer";
 import {Redirect} from "react-router-dom";
+import {SearchBarLangType} from "../../types/langTypes";
 
 type PropsType = {
-    searchProps: ISearchBarType
+    searchProps: ISearchBarType,
+    vocabulary: SearchBarLangType
 }
 
 const SearchBar: React.FC<PropsType> = (props) => {
     const {trendingSearches,isBigSearchBar, suggestionWords, value,resentSearches, setInput} = props.searchProps;
+    const vocabulary = props.vocabulary;
     const inputEl = useRef(null);
     const dispatch = useDispatch();
 
@@ -84,7 +87,7 @@ const SearchBar: React.FC<PropsType> = (props) => {
              + (isBigSearchBar && ' search-bar--bigger ')
              + (isFormFocus && ' search-bar--open')} method="get">
            <div className={'search-bar__container'}>
-               <input ref={inputEl} value={value} onChange={onChange} placeholder="Search for free photos" type="search"/>
+               <input ref={inputEl} value={value} onChange={onChange} placeholder={vocabulary.placeholder} type="search"/>
                <button onClick={onClick}>
                    <i className={'svg-icon'}><img src={searchIcon}/></i>
                </button>
@@ -96,7 +99,7 @@ const SearchBar: React.FC<PropsType> = (props) => {
                    <div>
                        <div className={'search-bar__dropdown__section'}>
                            <div className={'search-bar__dropdown__section__title'}>
-                               <span>Resent searches</span>
+                               <span>{vocabulary.resent}</span>
                                <button className={'js-search-bar-clear-recent-searches'}>
                                    <img src={closeIcon}/>
                                </button>
@@ -107,7 +110,7 @@ const SearchBar: React.FC<PropsType> = (props) => {
                        </div>
                        <div className={'search-bar__dropdown__section'}>
                            <div className={'search-bar__dropdown__section__title'}>
-                               <span>Trending Topics</span>
+                               <span>{vocabulary.trending}</span>
                            </div>
                            <div className={'search-bar__dropdown__section__content'}>
                                <TrendingSearches trendingSearches={trendingSearches}/>

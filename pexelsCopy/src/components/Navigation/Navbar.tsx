@@ -5,6 +5,7 @@ import NavList from "./NavList/NavList";
 import SearchBar from "../SearchBar/SearchBar";
 import {ISearchBarType} from "../../types/commonTypes";
 import {actionsCommon, InitialStateType as CommonStateType} from "../../redux/commonReducer";
+import {NavigationLangType, SearchBarLangType} from "../../types/langTypes";
 
 type PropsType = {
     isMain: boolean,
@@ -13,6 +14,8 @@ type PropsType = {
 
 const Navbar: React.FunctionComponent<PropsType> = (props) => {
     const [scrollTop, setScrollTop] = useState(0);
+    const vocabularyNavbar: NavigationLangType = props.common.vocabulary.navigation;
+    const vocabularySearchBar: SearchBarLangType = props.common.vocabulary.searchBar;
 
     document.addEventListener('scroll', () => {
         const temp = window.pageYOffset;
@@ -46,9 +49,9 @@ const Navbar: React.FunctionComponent<PropsType> = (props) => {
                 <div className={'navigation__logo__text'}>Pexels</div>
             </a>
             <div className={'navigation__search-bar'}>
-                <SearchBar searchProps={SearchProps}/>
+                <SearchBar searchProps={SearchProps} vocabulary={vocabularySearchBar}/>
             </div>
-            <NavList />
+            <NavList vocabulary={vocabularyNavbar} lang={props.common.lang}/>
         </nav>
     )
 };

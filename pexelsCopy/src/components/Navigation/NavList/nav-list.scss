@@ -23,8 +23,8 @@
   }
 
   .hide-button {
-    @media (max-width: $content-width-pre-little) {
-      display: none
+    @media (max-width: $content-width-pre-middle) {
+      display: none;
     }
   }
 
@@ -92,6 +92,22 @@
         transform: translateY(-1px);
         opacity: .75;
       }
+    }
+  }
+}
+
+.select-lang {
+  & select {
+    min-width: 110px;
+    //height: 40px;
+    padding: 6px 12px;
+    font-weight: 600;
+    appearance: none;
+    background: $color-white url('../../../assets/icons/arrow-down.svg') 100%/contain no-repeat;
+
+    @media screen and (max-width: $content-width-small) {
+      font-size: 0.8rem;
+      min-width: 80px;
     }
   }
 }

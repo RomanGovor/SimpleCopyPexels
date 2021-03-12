@@ -12,6 +12,8 @@ type PropsType = {
 
 const Header: React.FunctionComponent<PropsType> = (props) => {
     const {headerPhoto, recommendCategories} = props;
+    const vocabulary = props.common.vocabulary.header;
+
     return (
         <header className={'header'}>
             <div className={'header__background'}>
@@ -21,7 +23,7 @@ const Header: React.FunctionComponent<PropsType> = (props) => {
                 <div className="header__footer__item"></div>
                 <div className="header__footer__item header__footer__item--align-right">
                     <a href={headerPhoto.phLink}
-                       target={'_blank'}>Photo by {headerPhoto.phNames}</a>
+                       target={'_blank'}>{vocabulary.photographer} {headerPhoto.phNames}</a>
                 </div>
             </div>
             <HeaderContent recommendCategories={recommendCategories} common={props.common}/>

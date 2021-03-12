@@ -23,7 +23,7 @@ export const defaultPhotoParameters: PhotoCardType = {
     phNames: 'kira schwarz',
     phPhotoLink: defaultAvatar,
     phLink: 'https://www.pexels.com/@kira-schwarz',
-    photoId: 2880507
+    photoId: 2880507111
 };
 
 export const trendingCategories: Array<TrendingSearchesType> = [

@@ -11,9 +11,10 @@ type PropsType = {
     common: CommonStateType
 }
 
-const CategoryPage: React.FC<PropsType> = (props) => {
+const CollectionsPage: React.FC<PropsType> = (props) => {
     const {photos, maxCountOfColumns} = props.collectionsPage;
     const [isBadRequest, setBadRequest] = useState(false);
+    const vocabulary = props.common.vocabulary.collectionsPage;
 
     const likedPhotos = props.common.likedPhotos;
     const collectPhotos = props.common.collectPhotos;
@@ -23,9 +24,10 @@ const CategoryPage: React.FC<PropsType> = (props) => {
             <Navbar isMain={false} common={props.common}/>
             <div className={'category'}>
                 <section className={'category__header'}>
-                    <h1 className={'category__header__title'}>Collection</h1>
+                    <h1 className={'category__header__title'}>{vocabulary.title}</h1>
                 </section>
                 <section className={'category__grid'}>
+                    { photos && (photos.length !== 0) &&
                     <Photos
                         photos={photos}
                         maxCountOfColumns={maxCountOfColumns}
@@ -33,10 +35,11 @@ const CategoryPage: React.FC<PropsType> = (props) => {
                         collectPhotos={collectPhotos}
                         isBadRequest={isBadRequest}
                         isFetching={true}/>
+                    }
                 </section>
             </div>
         </>
     );
 }
 
-export default CategoryPage;
+export default CollectionsPage;

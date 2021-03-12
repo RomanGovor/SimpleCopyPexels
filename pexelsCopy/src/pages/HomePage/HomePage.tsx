@@ -22,13 +22,16 @@ const HomePage: React.FC<PropsType> = (props) => {
     const likedPhotosArray: Array<number> = props.common.likedPhotos;
     const collectPhotos: Array<number> = props.common.collectPhotos;
 
+    const vocabularyUnderlinedTabs = props.common.vocabulary.underlineTabs;
+    const titleTabslinedTabs = props.common.vocabulary.homePage;
+
     return (
         <>
             <Navbar isMain={true} common={props.common}/>
             <SuspendedHeader headerPhoto={headerPhoto} recommendCategories={recommendCategories} common={props.common}/>
-            <UnderlinedTabs />
+            <UnderlinedTabs vocabulary={vocabularyUnderlinedTabs}/>
             <div className={'container home-page'}>
-                <TitleTabs />
+                <TitleTabs vocabulary={titleTabslinedTabs}/>
                 <PhotosContainer photos={photos}
                                  maxCountOfColumns={maxCountOfColumns}
                                  likedPhotosArray={likedPhotosArray}

@@ -3,7 +3,7 @@ import {connect, useDispatch} from "react-redux";
 import {actions, setHeaderPhoto} from "./redux/homeReducer";
 import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
-import {mainCategories, trendingCategories} from "./utils/constants/constants";
+import {defaultPhotoParameters, mainCategories, trendingCategories} from "./utils/constants/constants";
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {getLikes} from "./utils/storage/storagePhotoLikes";
 import {actionsCommon, initialState, InitialStateType as CommonStateType} from "./redux/commonReducer";
@@ -13,6 +13,7 @@ import {AppStateType} from "./redux/store";
 import {compose} from "redux";
 import {isUniquePhoto} from "./utils/photoEditing";
 import {getCollectPhotos} from "./utils/storage/storagePhotoCollect";
+import {getLanguage} from "./utils/storage/storageLang";
 
 type PropsType = {
     common: CommonStateType
@@ -47,10 +48,12 @@ const App: React.FC<PropsType> = (props) => {
         const resentSearches = getResentWords();
         dispatch(actionsCommon.setResentSearches(resentSearches));
 
+        const lang = getLanguage();
+        dispatch(actionsCommon.setLanguage(lang));
     }, []);
 
     useEffect(() => {
-        if (isUniquePhoto(props.common.photoModalCard, initialState.photoModalCard)) {
+        if (isUniquePhoto(props.common.photoModalCard, defaultPhotoParameters)) {
             dispatch(actionsCommon.setOpenModalFlag(true));
         }
 
@@ -74,7 +77,10 @@ const App: React.FC<PropsType> = (props) => {
                 <Route path='*'
                        render={() => <div>404 NOT FOUND</div>}/>
             </Switch>
-            <Modal isOpenModal={props.common.isOpenModal} photo={props.common.photoModalCard} />
+
+            <Modal isOpenModal={props.common.isOpenModal}
+                   photo={props.common.photoModalCard}
+                   vocabulary={props.common.vocabulary.modal} />
         </div>
     );
 }
