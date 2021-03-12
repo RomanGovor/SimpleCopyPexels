@@ -20,6 +20,7 @@ const SuspendedHeader = withSuspense(Header);
 const HomePage: React.FC<PropsType> = (props) => {
     const {photos, headerPhoto, maxCountOfColumns, recommendCategories} = props.homePage;
     const likedPhotosArray: Array<number> = props.common.likedPhotos;
+    const collectPhotos: Array<number> = props.common.collectPhotos;
 
     return (
         <>
@@ -31,6 +32,7 @@ const HomePage: React.FC<PropsType> = (props) => {
                 <PhotosContainer photos={photos}
                                  maxCountOfColumns={maxCountOfColumns}
                                  likedPhotosArray={likedPhotosArray}
+                                 collectPhotos={collectPhotos}
                                  isBadRequest={false}
                                  updatePhotos={updateArrayPhotos}/>
             </div>

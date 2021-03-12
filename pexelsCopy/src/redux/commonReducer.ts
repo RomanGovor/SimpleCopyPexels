@@ -1,5 +1,5 @@
 import {InferActionsTypes, BaseThunkType} from './store';
-import {LikesArrayType, PhotoCardType, TrendingSearchesType} from "../types/commonTypes";
+import {CollectArrayType, LikesArrayType, PhotoCardType, TrendingSearchesType} from "../types/commonTypes";
 import {photoAPI, wordsAPI} from "../api/api";
 import {getRandomArray} from "../utils/common";
 import img1 from "../assets/images/defaultImages/image-1.jpeg";
@@ -9,6 +9,7 @@ type ThunkType = BaseThunkType<ActionsType>
 
 export const initialState = {
     likedPhotos: [] as Array<number>,
+    collectPhotos: [] as Array<number>,
     suggestionWords: [] as Array<string>,
     resentSearches: [] as Array<string>,
     trendingSearches: [] as Array<TrendingSearchesType>,
@@ -28,6 +29,8 @@ export const initialState = {
 export const actionsCommon = {
     setLikedPhotos: (likedPhotos: LikesArrayType) =>
         ({type: 'COMMON/SET_LIKED_PHOTOS', likedPhotos} as const),
+    setCollectPhotos: (collectPhotos: CollectArrayType) =>
+        ({type: 'COMMON/SET_COLLECT_PHOTOS', collectPhotos} as const),
     setTrendingCategories: (trendingCategories: Array<TrendingSearchesType>) =>
         ({type: 'COMMON/SET_TRENDING_CATEGORIES', trendingCategories} as const),
     setResentSearches: (resentSearches: Array<string>) =>
@@ -54,6 +57,12 @@ const commonReducer = (state = initialState, action: ActionsType): InitialStateT
             return {
                 ...state,
                 likedPhotos: [...action.likedPhotos]
+            };
+        }
+        case 'COMMON/SET_COLLECT_PHOTOS': {
+            return {
+                ...state,
+                collectPhotos: [...action.collectPhotos]
             };
         }
         case 'COMMON/SET_TRENDING_CATEGORIES': {

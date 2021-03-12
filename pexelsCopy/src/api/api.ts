@@ -16,6 +16,9 @@ export const photoAPI = {
     },
     getCuratedPhoto(page: number) {
         return client.photos.curated({ per_page: 10, page }).then(photos => photos);
+    },
+    getPhotoBuId(id: number) {
+        return client.photos.show({ id }).then(photo => photo);
     }
 }
 

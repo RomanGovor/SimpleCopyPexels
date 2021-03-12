@@ -4,7 +4,7 @@ import {PhotoCardType} from "../../../../types/commonTypes";
 import favoriteIcon from '../../../../assets/icons/favorite-icon.svg';
 import starIcon from '../../../../assets/icons/star.svg';
 import addIcon from '../../../../assets/icons/add.svg';
-import successIcon from '../../../../assets/icons/success.svg';
+import collectIcon from '../../../../assets/icons/collect-white.svg';
 import heartIcon from '../../../../assets/icons/heart.svg';
 import fullHeartIcon from '../../../../assets/icons/full-heart.svg';
 import downloadIcon from '../../../../assets/icons/download.svg';
@@ -15,7 +15,8 @@ type PropsType = {
     isLiked: boolean
 }
 
-const PhotoCard: React.FC<PhotoCardType & PropsType> = ({src, phLink,phPhotoLink,phNames, photoId, isLiked}) => {
+const PhotoCard: React.FC<PhotoCardType & PropsType> = (props) => {
+    const {src, phLink,phPhotoLink,phNames, photoId, isLiked, isCollect} = props;
 
     return (
         <div className={'photo-card hide-featured-badge hide-favorite-badge'}>
@@ -42,13 +43,15 @@ const PhotoCard: React.FC<PhotoCardType & PropsType> = ({src, phLink,phPhotoLink
                             <img src={downloadIcon}/>
                         </i>
                     </a>
-                    <button className={'js-collect rd__button rd__button--collect rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
-                        <i className={'rd__button--collect--not-active--icon svg-icon'}>
+                    <button data-photoId={photoId} className={'js-collect rd__button rd__button--collect rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
+                        {!isCollect && <i className={'rd__button--collect--not-active--icon svg-icon'}>
                             <img src={addIcon}/>
                         </i>
-                        <i className={'rd__button--collect--active--icon svg-icon none'}>
-                            <img src={successIcon}/>
-                        </i>
+                        }
+                        {isCollect && <i className={'rd__button--collect--active--icon svg-icon'}>
+                                <img src={collectIcon}/>
+                            </i>
+                        }
                     </button>
                     <button data-photoId={photoId} className={'js-like rd__button rd__button--like rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
                         {isLiked && <i className={'rd__button--like--active--icon svg-icon'}>

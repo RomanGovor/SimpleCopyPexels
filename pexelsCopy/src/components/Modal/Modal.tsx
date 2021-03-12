@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {createFactory, useEffect, useState} from "react";
 import './Modal.scss';
 import './Photo-page.scss';
 import {PhotoCardType} from "../../types/commonTypes";
@@ -7,9 +7,11 @@ import {useDispatch} from "react-redux";
 import fullHeartIcon from "../../assets/icons/full-heart.svg";
 import heartIcon from "../../assets/icons/heart-black.svg";
 import addIcon from '../../assets/icons/add-black.svg';
-import collectIcon from '../../assets/icons/collect.svg';
+import collectIcon from '../../assets/icons/success.svg';
 import {getLikes, togglePhotoLike} from "../../utils/storage/storagePhotoLikes";
 import {actionsCommon} from "../../redux/commonReducer";
+import {getCollectPhotos, toggleCollectPhoto} from "../../utils/storage/storagePhotoCollect";
+import {defaultPhotoParameters} from "../../utils/constants/constants";
 
 type PropsType = {
     photo: PhotoCardType,
@@ -18,6 +20,7 @@ type PropsType = {
 
 const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
     const [isLiked, setLike] = useState(photo.isLiked);
+    const [isCollect, setCollect] = useState(photo.isCollect);
 
     const fullName = photo.phNames.split(' ').map((el) => {
         return el.split('').map((symb, i) => {
@@ -27,18 +30,35 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        setCollect(photo.isCollect);
+        setLike(photo.isLiked);
+    }, [photo.photoId])
+
     const onLikeBtnClick = (): void => {
         // @ts-ignore
         setLike(togglePhotoLike(photo.photoId));
         const likes = getLikes();
-
         dispatch(actionsCommon.setLikedPhotos(likes))
+    }
+
+    const onCollectBtnClick = (): void => {
+        const collectPhotos1 = getCollectPhotos();
+        console.log(collectPhotos1);
+
+        // @ts-ignore
+        setCollect(toggleCollectPhoto(photo.photoId));
+        const collectPhotos = getCollectPhotos();
+
+        console.log(collectPhotos);
+        dispatch(actionsCommon.setCollectPhotos(collectPhotos));
     }
 
 
     const clickHandler = (event: any) => {
         const overlay = event.target;
         if (overlay?.classList?.contains('modal__overlay')) {
+            dispatch(actionsCommon.setPhotoModalCard(defaultPhotoParameters));
             dispatch(actionsCommon.setOpenModalFlag(false));
         }
     }
@@ -51,6 +71,7 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
     }, []);
 
     const onCloseClick = () => {
+        dispatch(actionsCommon.setPhotoModalCard(defaultPhotoParameters));
         dispatch(actionsCommon.setOpenModalFlag(false));
     }
 
@@ -110,13 +131,15 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal}) => {
                                                 </i>
                                                 }
                                             </button>
-                                            <button data-photoId={photo.photoId} className={'js-collect js-photo-page-action-buttons-collect rd__button rd__button--white rd__button--with-icon-left'}>
-                                                <i className={'rd__button--collect--not-active--icon svg-icon'}>
+                                            <button onClick={onCollectBtnClick} data-photoId={photo.photoId} className={'js-collect js-photo-page-action-buttons-collect rd__button rd__button--white rd__button--with-icon-left'}>
+                                                {!isCollect && <i className={'rd__button--collect-active--icon svg-icon'}>
                                                     <img src={addIcon}/>
                                                 </i>
-                                                <i className={'rd__button--collect-active--icon svg-icon none'}>
-                                                    <img src={collectIcon}/>
-                                                </i>
+                                                }
+                                                {isCollect && <i className={'rd__button--collect-active--icon svg-icon'}>
+                                                        <img src={collectIcon}/>
+                                                    </i>
+                                                }
                                                 <span>Collect</span>
                                             </button>
                                             <div className={'js-photo-page-action-buttons-download'}>

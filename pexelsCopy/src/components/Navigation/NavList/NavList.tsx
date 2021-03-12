@@ -9,7 +9,7 @@ const NavList: React.FC = () => {
             <NavListItem link={'https://www.pexels.com/license/'} title={'License'}/>
             <NavListItem link={'https://www.pexels.com/join-contributor/'} title={'Upload'}/>
             <NavListItem typeOfItem={'triplet'}/>
-            <NavListItem link={'https://www.pexels.com/onboarding/'} title={'Join'} typeOfItem={'button'}/>
+            <NavListItem link={'https://www.pexels.com/onboarding/'} title={'Collection'} redirect={'collection'} typeOfItem={'button'}/>
             <NavListItem typeOfItem={'burger'}/>
         </ul>
     );

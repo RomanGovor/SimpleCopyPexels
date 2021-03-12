@@ -13,6 +13,7 @@ export type PhotoCardType = {
     phNames: string
     photoId: number
     isLiked?: boolean
+    isCollect?: boolean
 }
 
 export type ArrColumnsType = {
@@ -38,5 +39,6 @@ export interface ISearchBarType {
 export type commonStateType = homeStateType & categoryStateType;
 
 export type LikesArrayType = Array<number> | never[];
+export type CollectArrayType = Array<number> | never[];
 
 export type RecentSearchsType = Array<string> | never[];

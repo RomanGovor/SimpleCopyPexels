@@ -12,6 +12,7 @@ import Modal from "./components/Modal/Modal";
 import {AppStateType} from "./redux/store";
 import {compose} from "redux";
 import {isUniquePhoto} from "./utils/photoEditing";
+import {getCollectPhotos} from "./utils/storage/storagePhotoCollect";
 
 type PropsType = {
     common: CommonStateType
@@ -19,7 +20,9 @@ type PropsType = {
 
 const HomePageContainer = React.lazy(() => import('./pages/HomePage/HomePageContainer'));
 const CategoryPageContainer = React.lazy(() => import('./pages/CategoryPage/CategoryPageContainer'));
+const CollectionsPageContainer = React.lazy(() => import('./pages/CollectionsPage/CollectionsPageContainer'));
 
+const SuspendedCollectionsPage = withSuspense(CollectionsPageContainer);
 const SuspendedHomePage = withSuspense(HomePageContainer);
 const SuspendedCategoryPage = withSuspense(CategoryPageContainer);
 
@@ -37,6 +40,9 @@ const App: React.FC<PropsType> = (props) => {
 
         const likes = getLikes();
         dispatch(actionsCommon.setLikedPhotos(likes));
+
+        const collectPhotos = getCollectPhotos();
+        dispatch(actionsCommon.setCollectPhotos(collectPhotos));
 
         const resentSearches = getResentWords();
         dispatch(actionsCommon.setResentSearches(resentSearches));
@@ -61,6 +67,9 @@ const App: React.FC<PropsType> = (props) => {
 
                 <Route path='/category/:query?'
                        render={() => <SuspendedCategoryPage />}/>
+
+                <Route path='/collections'
+                       render={() => <SuspendedCollectionsPage />}/>
 
                 <Route path='*'
                        render={() => <div>404 NOT FOUND</div>}/>

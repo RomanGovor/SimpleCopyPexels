@@ -3,11 +3,13 @@ import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import homeReducer from "./homeReducer";
 import categoryReducer from "./categoryReducer";
 import commonReducer from "./commonReducer";
+import collectionsReducer from "./collectionsReducer";
 
 const rootReducer = combineReducers({
     homePage: homeReducer,
     categoryPage: categoryReducer,
-    common: commonReducer
+    common: commonReducer,
+    collectionsPage: collectionsReducer
 })
 
 type RootReducerType = typeof rootReducer;

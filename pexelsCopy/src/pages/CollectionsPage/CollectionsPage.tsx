@@ -1,26 +1,19 @@
 import React, {useEffect, useState} from "react";
-import {InitialStateType, updateCategoriesArrayPhotos} from "../../redux/categoryReducer";
 import Navbar from "../../components/Navigation/Navbar";
-import './CategoryPage.scss'
+import '../CategoryPage/CategoryPage.scss';
 import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
 import PhotosContainer from "../../components/Photos/PhotosContainer";
+import { InitialStateType } from "../../redux/collectionsReducer";
+import Photos from "../../components/Photos/Photos";
 
 type PropsType = {
-    categoryPage: InitialStateType,
-    query: string,
+    collectionsPage: InitialStateType,
     common: CommonStateType
 }
 
 const CategoryPage: React.FC<PropsType> = (props) => {
-    const {photos, maxCountOfColumns} = props.categoryPage;
-    const query = props.query;
-    const title = photos.length === 0 ? `We Couldn't Find Anything For “${query}”` : query;
+    const {photos, maxCountOfColumns} = props.collectionsPage;
     const [isBadRequest, setBadRequest] = useState(false);
-
-    useEffect(() => {
-        if (query !== title) setBadRequest(true);
-        else setBadRequest(false);
-    }, [title]);
 
     const likedPhotos = props.common.likedPhotos;
     const collectPhotos = props.common.collectPhotos;
@@ -30,17 +23,16 @@ const CategoryPage: React.FC<PropsType> = (props) => {
             <Navbar isMain={false} common={props.common}/>
             <div className={'category'}>
                 <section className={'category__header'}>
-                    <h1 className={'category__header__title'}>{title}</h1>
+                    <h1 className={'category__header__title'}>Collection</h1>
                 </section>
                 <section className={'category__grid'}>
-                    <PhotosContainer
+                    <Photos
                         photos={photos}
                         maxCountOfColumns={maxCountOfColumns}
                         likedPhotosArray={likedPhotos}
                         collectPhotos={collectPhotos}
-                        query={query}
                         isBadRequest={isBadRequest}
-                        updatePhotos={updateCategoriesArrayPhotos}/>
+                        isFetching={true}/>
                 </section>
             </div>
         </>

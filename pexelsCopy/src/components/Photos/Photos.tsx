@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './Photos.scss'
-import {ArrColumnsType, LikesArrayType, PhotoCardType} from "../../types/commonTypes";
+import {ArrColumnsType, CollectArrayType, LikesArrayType, PhotoCardType} from "../../types/commonTypes";
 import PhotoCard from "./PhotosColumn/PhotoCard/PhotoCard";
 import PhotosColumn from "./PhotosColumn/PhotosColumn";
 import {generatePhotoColumns} from "../../utils/generatePhotoColumns";
@@ -8,18 +8,20 @@ import {getLikes, togglePhotoLike} from "../../utils/storage/storagePhotoLikes";
 import {useDispatch} from "react-redux";
 import {actionsCommon} from "../../redux/commonReducer";
 import {getPhotoCardById} from "../../utils/photoEditing";
+import {getCollectPhotos, toggleCollectPhoto} from "../../utils/storage/storagePhotoCollect";
 
 
 type PropsType = {
     photos: Array<PhotoCardType>,
     maxCountOfColumns: number,
     likedPhotosArray: Array<number>,
+    collectPhotos: Array<number>,
     isFetching: boolean,
-    isBadRequest: boolean
+    isBadRequest: boolean,
 }
 
-const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardType>,
-                   likes: LikesArrayType, isFetching: boolean, isBadRequest: boolean): Array<JSX.Element | undefined> => {
+const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardType>, likes: LikesArrayType,
+                   isFetching: boolean, isBadRequest: boolean, collectPhotos: CollectArrayType): Array<JSX.Element | undefined> => {
     const columns: Array<JSX.Element | undefined>= [];
 
     for (let i = 0; i < arrColumns.length; i++) {
@@ -28,6 +30,7 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
             // @ts-ignore
             const photoId: number & never = photos[index].photoId
             const isLiked = likes.includes(photoId);
+            const isCollect = collectPhotos.includes(photoId);
 
             return <PhotoCard src={photos[index].src}
                               key={photos[index].photoId}
@@ -35,7 +38,8 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
                               phNames={photos[index].phNames}
                               phPhotoLink={photos[index].phPhotoLink}
                               photoId={photos[index].photoId}
-                              isLiked={isLiked}/>
+                              isLiked={isLiked}
+                              isCollect={isCollect} />
         });
 
         columns.push(<PhotosColumn photosElems={photosColumn} isFetching={isFetching} isBadRequest={isBadRequest}/> )
@@ -44,12 +48,14 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
     return columns;
 }
 
-const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArray, isFetching,isBadRequest}) => {
+const Photos: React.FC<PropsType> = (props) => {
+    const {photos, maxCountOfColumns, likedPhotosArray, isFetching,isBadRequest, collectPhotos} = props;
+
     const [widthWindow, setWidthWindow] = useState(2000);
     const [countColumn, setCountColumn] = useState(maxCountOfColumns);
 
     const arrColumns = generatePhotoColumns(countColumn, photos);
-    const columns: Array<JSX.Element | undefined> = getColumn(arrColumns, photos, likedPhotosArray, isFetching, isBadRequest);
+    const columns: Array<JSX.Element | undefined> = getColumn(arrColumns, photos, likedPhotosArray, isFetching, isBadRequest, collectPhotos);
 
     const controlResize = (maxColumns: number): void => {
         const temp = document.body.clientWidth;
@@ -90,6 +96,14 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArra
             const likes = getLikes();
 
             dispatch(actionsCommon.setLikedPhotos(likes))
+        } else if (target?.classList?.contains('js-collect')) {
+            const photoId: number = +(target.getAttribute('data-photoId'));
+
+            // @ts-ignore
+            toggleCollectPhoto(photoId);
+            const collectPhotos = getCollectPhotos();
+
+            dispatch(actionsCommon.setCollectPhotos(collectPhotos))
         } else if (article) {
             const photoId: number = +(article.getAttribute('data-photoId'));
 

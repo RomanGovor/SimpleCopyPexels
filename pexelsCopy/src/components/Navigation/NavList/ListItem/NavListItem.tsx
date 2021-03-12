@@ -1,11 +1,13 @@
 import React from "react";
 import tripleSvg from '../../../../assets/icons/triple.svg';
 import burgerSvg from '../../../../assets/icons/burger.svg';
+import { NavLink } from "react-router-dom";
 
 interface INavListItemProps {
     link?: string
     title?: string
     typeOfItem?: string
+    redirect?: string
 }
 
 interface IClassesByTypes {
@@ -13,9 +15,10 @@ interface IClassesByTypes {
     wrapAboveLink?: string
     linkClasses?: string
     iconPath?: string
+    redirect?: string
 }
 
-const getItemClassesByType = (typeOfItem: string) : IClassesByTypes => {
+const getItemClassesByType = (typeOfItem: string, redirect: string) : IClassesByTypes => {
     const defaultClasses: IClassesByTypes = {
         mainClasses: 'hide-nav-item',
         wrapAboveLink: 'rd__dropdown',
@@ -35,7 +38,7 @@ const getItemClassesByType = (typeOfItem: string) : IClassesByTypes => {
         case 'button':
             return {
                 mainClasses: 'hide-button',
-                linkClasses: 'sub-nav__item sub-nav__item--button'
+                linkClasses: 'sub-nav__item sub-nav__item--button',
             }
         case 'burger':
             return {
@@ -48,17 +51,21 @@ const getItemClassesByType = (typeOfItem: string) : IClassesByTypes => {
     return defaultClasses;
 }
 
-const NavListItem: React.FC<INavListItemProps> = ({link, title, typeOfItem = 'link'}) => {
-    const itemClass: IClassesByTypes = getItemClassesByType(typeOfItem);
+const NavListItem: React.FC<INavListItemProps> = ({link, title, typeOfItem = 'link', redirect}) => {
+    // @ts-ignore
+    const itemClass: IClassesByTypes = getItemClassesByType(typeOfItem, redirect);
 
     return (
         <li className={itemClass.mainClasses}>
             <div className={itemClass.wrapAboveLink}>
-                {!(typeOfItem === 'triplet' || typeOfItem === 'burger') &&
-                    <a className={itemClass.linkClasses}
-                       href={link}
-                       target={'_blank'}>{title}
-                    </a>
+                {!(typeOfItem === 'triplet' || typeOfItem === 'burger' || typeOfItem === 'button') &&
+                <a className={itemClass.linkClasses}
+                   href={link}
+                   target={'_blank'}>{title}
+                </a>
+                }
+                {(typeOfItem === 'button') && (redirect !== undefined) &&
+                <NavLink className={itemClass.linkClasses} to={'/collections'}>{title}</NavLink>
                 }
                 {(typeOfItem === 'triplet' || typeOfItem === 'burger') &&
                 <a className={itemClass.linkClasses}>

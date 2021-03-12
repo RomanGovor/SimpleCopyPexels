@@ -23,7 +23,7 @@
   }
 
   .hide-button {
-    @media (max-width: $content-width-pre-middle) {
+    @media (max-width: $content-width-pre-little) {
       display: none
     }
   }

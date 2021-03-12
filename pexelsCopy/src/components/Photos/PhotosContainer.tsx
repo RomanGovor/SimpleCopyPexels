@@ -10,6 +10,7 @@ type mapStateType = {
     photos: Array<PhotoCardType>,
     maxCountOfColumns: number,
     likedPhotosArray: Array<number>,
+    collectPhotos: Array<number>,
     query?: string,
     isBadRequest: boolean
     updatePhotos: (page: number, query?: string) => CategoryThunkType & HomeThunkType
@@ -21,7 +22,7 @@ const Photos = React.lazy(() => import('./Photos'));
 const SuspendedPhotos = withSuspense(Photos);
 
 const PhotosContainer:React.FC<PropsType> = (props) => {
-    const {photos, maxCountOfColumns, updatePhotos,isBadRequest, likedPhotosArray} = props;
+    const {photos, maxCountOfColumns, updatePhotos,isBadRequest, likedPhotosArray, collectPhotos} = props;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetching, setFetching] = useState(true);
@@ -61,7 +62,8 @@ const PhotosContainer:React.FC<PropsType> = (props) => {
                          photos={photos}
                          isBadRequest={isBadRequest}
                          maxCountOfColumns={maxCountOfColumns}
-                         likedPhotosArray={likedPhotosArray}/>
+                         likedPhotosArray={likedPhotosArray}
+                         collectPhotos={collectPhotos} />
     )
 }
 
