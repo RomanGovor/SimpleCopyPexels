@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect, useDispatch} from "react-redux";
-import {actions, InitialStateType, setHeaderPhoto} from "./redux/homeReducer";
+import {actions, setHeaderPhoto} from "./redux/homeReducer";
 import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
 import {mainCategories, trendingCategories} from "./utils/constants/constants";
@@ -25,7 +25,6 @@ const SuspendedCategoryPage = withSuspense(CategoryPageContainer);
 
 const App: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
-    const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         dispatch(setHeaderPhoto());
@@ -47,7 +46,6 @@ const App: React.FC<PropsType> = (props) => {
     useEffect(() => {
         if (isUniquePhoto(props.common.photoModalCard, initialState.photoModalCard)) {
             dispatch(actionsCommon.setOpenModalFlag(true));
-            setModalOpen(true);
         }
 
     }, [props.common.photoModalCard]);
@@ -81,5 +79,3 @@ const mapStateToProps = (state: AppStateType) => {
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {...actionsCommon})
 )(App);
-
-// export default App;

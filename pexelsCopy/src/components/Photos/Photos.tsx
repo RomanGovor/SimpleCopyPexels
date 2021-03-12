@@ -13,10 +13,13 @@ import {getPhotoCardById} from "../../utils/photoEditing";
 type PropsType = {
     photos: Array<PhotoCardType>,
     maxCountOfColumns: number,
-    likedPhotosArray: Array<number>
+    likedPhotosArray: Array<number>,
+    isFetching: boolean,
+    isBadRequest: boolean
 }
 
-const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardType>, likes: LikesArrayType): Array<JSX.Element | undefined> => {
+const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardType>,
+                   likes: LikesArrayType, isFetching: boolean, isBadRequest: boolean): Array<JSX.Element | undefined> => {
     const columns: Array<JSX.Element | undefined>= [];
 
     for (let i = 0; i < arrColumns.length; i++) {
@@ -35,40 +38,38 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
                               isLiked={isLiked}/>
         });
 
-        columns.push(<PhotosColumn photosElems={photosColumn} /> )
+        columns.push(<PhotosColumn photosElems={photosColumn} isFetching={isFetching} isBadRequest={isBadRequest}/> )
     }
 
     return columns;
 }
 
-const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArray}) => {
-    const [widthWindow, setWidthWindow] = useState(window.screen.width);
+const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArray, isFetching,isBadRequest}) => {
+    const [widthWindow, setWidthWindow] = useState(2000);
     const [countColumn, setCountColumn] = useState(maxCountOfColumns);
 
     const arrColumns = generatePhotoColumns(countColumn, photos);
-    const columns: Array<JSX.Element | undefined> = getColumn(arrColumns, photos, likedPhotosArray);
+    const columns: Array<JSX.Element | undefined> = getColumn(arrColumns, photos, likedPhotosArray, isFetching, isBadRequest);
 
     const controlResize = (maxColumns: number): void => {
         const temp = document.body.clientWidth;
-
         if ((temp >= 1440) && !(widthWindow >= 1440) && (maxColumns === 4)) {
             setWidthWindow(temp);
             setCountColumn(4);
-        } else if ((temp >= 1070) && !(widthWindow >= 1070)) {
+        } else if ((temp >= 1070) && !(widthWindow >= 1070 && widthWindow <= 1440)) {
             setWidthWindow(temp);
             setCountColumn(3);
-        } else if ((temp < 1070) && (temp >= 600) && !((widthWindow > 600) && (widthWindow <= 1070))) {
+        } else if ((temp < 1070) && (temp >= 700) && !((widthWindow > 700) && (widthWindow <= 1070))) {
             setWidthWindow(temp);
             setCountColumn(2);
-        } else if ((temp < 600) && !(widthWindow < 600)) {
+        } else if ((temp < 700) && (widthWindow > 700)) {
             setWidthWindow(temp);
             setCountColumn(1);
         }
     }
 
-    controlResize(maxCountOfColumns);
-
     useEffect(() => {
+        controlResize(maxCountOfColumns);
         window.addEventListener('resize', () => {
             controlResize(maxCountOfColumns);
         });
@@ -105,71 +106,3 @@ const Photos: React.FC<PropsType> = ({photos, maxCountOfColumns, likedPhotosArra
 }
 
 export default Photos;
-
-// import {AppStateType} from "../../redux/store";
-// import {compose} from "redux";
-// import {connect, useDispatch} from "react-redux";
-// // import {actions} from "../../redux/homeReducer";
-// import React, {useEffect, useState} from "react";
-// import {MAX_COUNT_PAGE} from "../../utils/constants/constants";
-// import {updateArrayPhotos} from "../../redux/homeReducer";
-// import {withSuspense} from "../common/Suspense/withSuspense";
-// import {commonStateType} from "../../types/commonTypes";
-//
-// type mapStateType = {
-//     initialPage: commonStateType,
-//
-// }
-//
-// type PropsType = mapStateType;
-//
-//
-// const Photos = React.lazy(() => import('./Photos'));
-// const SuspendedPhotos = withSuspense(Photos);
-//
-// const PhotosContainer:React.FC<PropsType> = (props) => {
-//     const {photos, maxCountOfColumns} = props.initialPage;
-//
-//     const [currentPage, setCurrentPage] = useState(1);
-//     const [isFetching, setFetching] = useState(true);
-//
-//     const dispatch = useDispatch();
-//
-//     const scrollHandler = (event: any) => {
-//         if (event.target.documentElement.scrollHeight - (event.target.documentElement.scrollTop + window.innerHeight) < 100
-//             && currentPage < MAX_COUNT_PAGE) {
-//             setFetching(true);
-//         }
-//     }
-//
-//     useEffect(() => {
-//         if (isFetching) {
-//             dispatch(updateArrayPhotos(currentPage));
-//             setCurrentPage(prevState => prevState + 1);
-//             setFetching(false);
-//         }
-//     }, [isFetching]);
-//
-//     useEffect(() => {
-//         document.addEventListener('scroll', scrollHandler);
-//         return function () {
-//             document.removeEventListener('scroll', scrollHandler);
-//         }
-//     }, []);
-//
-//
-//     return (
-//         <SuspendedPhotos photos={photos} maxCountOfColumns={maxCountOfColumns}/>
-//     )
-// }
-//
-// const mapStateToProps = (state: AppStateType) => {
-//     return {
-//         initialPage: state.categoryPage
-//     }
-// }
-//
-// export default compose<React.ComponentType>(
-//     connect(mapStateToProps, {...actions})
-// )(PhotosContainer);
-

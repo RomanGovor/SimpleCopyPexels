@@ -49,6 +49,22 @@
         margin-left: .6rem
       }
     }
+
+    @media(max-width: $content-width-pre-middle) {
+      font-size: .9rem;
+
+      &__count {
+        display:none;
+      }
+    }
+
+    @media(max-width: $content-width-small) {
+      font-size: .6rem;
+    }
+
+    @media(max-width: $content-width-smallest) {
+      font-size: .475rem;
+    }
   }
 
   &--shadow {

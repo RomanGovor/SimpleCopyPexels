@@ -1,17 +1,14 @@
 import {InferActionsTypes, BaseThunkType} from './store';
 import {IHeaderContentItem, PhotoCardType} from '../types/commonTypes';
-import img1 from '../assets/images/defaultImages/image-1.jpeg';
 import defaultHeaderImage from '../assets/images/default-header-bg.jpeg';
 import {photoAPI} from '../api/api';
 import {getRandomInt} from "../utils/common";
 import {isUniquePhoto, photoEditing} from "../utils/photoEditing";
 
-type ThunkType = BaseThunkType<ActionsType>
+export type ThunkType = BaseThunkType<ActionsType>
 
 const initialState = {
-    photos: [
-        {src: img1, phNames: 'kira schwarz', phPhotoLink: 'https://images.pexels.com/users/avatars/616468/kira-schwarz-869.jpeg?auto=compress&fit=crop&h=60&w=60', phLink: 'https://www.pexels.com/@kira-schwarz', photoId: 6868419},
-    ] as Array<PhotoCardType>,
+    photos: [] as Array<PhotoCardType>,
     maxCountOfColumns: 3,
     headerPhoto: {
         src: defaultHeaderImage,
@@ -92,14 +89,6 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
     }
 }
 
-// export const getPhoto = (query: string): ThunkType => async (dispatch) => {
-//     const photoData = await photoAPI.getPhoto(query);
-//     if (Boolean(photoData)) {
-//         console.log(photoData)
-//         // dispatch(actions.setAuthUserData(id, email, login, true))
-//     }
-// }
-
 export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
     const data = await photoAPI.getHeaderPhoto();
     let src;
@@ -117,8 +106,6 @@ export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
                 : initialState.headerPhoto.src;
         } catch (err) {
             console.log(err);
-            console.log(data);
-
             src = initialState.headerPhoto.src;
         }
 

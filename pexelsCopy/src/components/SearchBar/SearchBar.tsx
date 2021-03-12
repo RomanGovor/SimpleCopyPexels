@@ -73,8 +73,16 @@ const SearchBar: React.FC<PropsType> = (props) => {
         setFormFocus(false);
     }
 
+    const onFormOver = () => {
+        const isFocused = document.activeElement === inputEl.current;
+        if (isFocused) setFormFocus(true);
+    }
+
     return (
-       <form onMouseLeave={onFormBlur} onFocus={onFormFocus} className={'search-bar ' + (isBigSearchBar && ' search-bar--bigger ') + (isFormFocus && ' search-bar--open')} method="get">
+       <form onMouseLeave={onFormBlur} onFocus={onFormFocus} onMouseOver={onFormOver}
+             className={'search-bar '
+             + (isBigSearchBar && ' search-bar--bigger ')
+             + (isFormFocus && ' search-bar--open')} method="get">
            <div className={'search-bar__container'}>
                <input ref={inputEl} value={value} onChange={onChange} placeholder="Search for free photos" type="search"/>
                <button onClick={onClick}>

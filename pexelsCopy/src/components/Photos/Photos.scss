@@ -1,4 +1,5 @@
 @import "../../sass/abstract/constants";
+
 .photos {
   display: -webkit-box;
   display: flex;
@@ -37,7 +38,7 @@
   &__column {
     display: flex;
     flex-direction: column;
-
+    align-items: center;
     flex-basis: 0;
     -webkit-box-flex: 1;
     flex-grow: 1;
@@ -265,7 +266,7 @@
   @media(max-width: $content-width-pre-middle) {
     -webkit-box-orient:vertical;
     -webkit-box-direction: normal;
-    flex-direction: column;
+    //flex-direction: column;
 
     &__column {
       margin-right: 0;

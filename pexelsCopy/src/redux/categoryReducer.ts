@@ -3,7 +3,7 @@ import {PhotoCardType} from '../types/commonTypes';
 import {photoAPI} from '../api/api';
 import {isUniquePhoto, photoEditing} from "../utils/photoEditing";
 
-type ThunkType = BaseThunkType<ActionsType>
+export type ThunkType = BaseThunkType<ActionsType>
 
 const initialState = {
     photos: [] as Array<PhotoCardType>,
@@ -66,10 +66,10 @@ const categoryReducer = (state = initialState, action: ActionsType): InitialStat
     }
 }
 
-export const updateCategoriesArrayPhotos = (page: number, category: string): ThunkType => async (dispatch) => {
+export const updateCategoriesArrayPhotos = (page: number, category?: string): ThunkType => async (dispatch) => {
     const curatedPageIndex = initialState.photoPageIndex;
 
-    if (page !== curatedPageIndex) {
+    if (page !== curatedPageIndex && category) {
         const data = await photoAPI.getCategoryPhotos(category, page);
 
         if (Boolean(data)) {
