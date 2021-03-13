@@ -5,7 +5,23 @@ export const VocabularyEn: VocabularyLangType = {
         explore: 'Explore',
         license: 'License',
         upload: 'Upload',
-        collections: 'Collections'
+        collections: 'Collections',
+        overlay: {
+            home: 'Home',
+            collections: 'My Collection',
+            discover: 'Discover Photos',
+            popular: 'Popular Searches',
+            videos: 'Free Videos',
+            challenges: 'Challenges',
+            leaderboard: 'Leaderboard',
+            pexelsBlog: 'Pexels Blog',
+            join: 'Join',
+            license: 'License',
+            apps: 'Apps And Ps Plugin',
+            faq: 'FAQ',
+            about: 'About Us',
+            terms: 'Imprint & Terms'
+        }
     },
     header: {
         title: 'The best free stock photos & videos shared by talented creators.',

@@ -5,7 +5,23 @@ export const VocabularyRu: VocabularyLangType = {
         explore: 'Найти фото',
         license: 'Лицензия',
         upload: 'Загрузить',
-        collections: 'Коллекция'
+        collections: 'Коллекция',
+        overlay: {
+            home: 'Главная',
+            collections: 'Моя Коллекция',
+            discover: 'Искать бесплатные фотографии',
+            popular: 'Популярные категории поиска',
+            videos: 'Бесплатные видео',
+            challenges: 'Челенджи',
+            leaderboard: 'Лучшие фотографы',
+            pexelsBlog: 'Блог Pexels',
+            join: 'Присоединиться',
+            license: 'Лицензия',
+            apps: 'Apps And Ps Plugin',
+            faq: 'Часто задаваемые вопросы',
+            about: 'О нас',
+            terms: 'Условия использования'
+        }
     },
     header: {
         title: 'Лучшие бесплатные стоковые фото и видео от талантливых авторов.',

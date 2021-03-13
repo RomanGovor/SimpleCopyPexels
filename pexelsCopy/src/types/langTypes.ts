@@ -12,7 +12,25 @@ export type NavigationLangType = {
     explore: string,
     license: string,
     upload: string,
-    collections: string
+    collections: string,
+    overlay: NavigationOverlayType
+}
+
+type NavigationOverlayType = {
+    home: string,
+    collections: string,
+    discover: string,
+    popular: string,
+    videos: string,
+    challenges: string,
+    leaderboard: string,
+    pexelsBlog: string,
+    join: string,
+    license: string,
+    apps: string,
+    faq: string,
+    about: string,
+    terms: string
 }
 
 export type HeaderLangType = {

@@ -28,7 +28,7 @@ const getItemClassesByType = (typeOfItem: string, redirect: string) : IClassesBy
     switch (typeOfItem) {
         case 'triplet':
             return {
-                mainClasses: 'hide-button mt05',
+                mainClasses: 'hide-button mt05 hide-nav-item',
                 wrapAboveLink: 'rd__dropdown',
                 linkClasses: 'sub-nav__item',
                 iconPath: tripleSvg
@@ -37,7 +37,7 @@ const getItemClassesByType = (typeOfItem: string, redirect: string) : IClassesBy
             return defaultClasses;
         case 'button':
             return {
-                mainClasses: 'hide-button',
+                mainClasses: 'hide-button hide-nav-item',
                 linkClasses: 'sub-nav__item sub-nav__item--button',
             }
         case 'burger':
@@ -56,7 +56,7 @@ const NavListItem: React.FC<INavListItemProps> = ({link, title, typeOfItem = 'li
     const itemClass: IClassesByTypes = getItemClassesByType(typeOfItem, redirect);
 
     return (
-        <li className={itemClass.mainClasses}>
+        <li data-type={typeOfItem} className={itemClass.mainClasses}>
             <div className={itemClass.wrapAboveLink}>
                 {!(typeOfItem === 'triplet' || typeOfItem === 'burger' || typeOfItem === 'button') &&
                 <a className={itemClass.linkClasses}
