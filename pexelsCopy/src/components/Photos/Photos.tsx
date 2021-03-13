@@ -33,7 +33,7 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
             const isCollect = collectPhotos.includes(photoId);
 
             return <PhotoCard src={photos[index].src}
-                              key={photos[index].photoId}
+                              key={photos[index].photoId * Math.random()}
                               phLink={photos[index].phLink}
                               phNames={photos[index].phNames}
                               phPhotoLink={photos[index].phPhotoLink}
@@ -42,7 +42,7 @@ const getColumn = (arrColumns: Array<ArrColumnsType>, photos: Array<PhotoCardTyp
                               isCollect={isCollect} />
         });
 
-        columns.push(<PhotosColumn photosElems={photosColumn} isFetching={isFetching} isBadRequest={isBadRequest}/> )
+        columns.push(<PhotosColumn photosElems={photosColumn} isFetching={isFetching} isBadRequest={isBadRequest} key={i}/> )
     }
 
     return columns;
@@ -89,7 +89,7 @@ const Photos: React.FC<PropsType> = (props) => {
         const article = event.target.closest('article');
 
         if (target?.classList?.contains('js-like')) {
-            const photoId: number = +(target.getAttribute('data-photoId'));
+            const photoId: number = +(target.getAttribute('data-photoid'));
 
             // @ts-ignore
             togglePhotoLike(photoId)
@@ -97,7 +97,7 @@ const Photos: React.FC<PropsType> = (props) => {
 
             dispatch(actionsCommon.setLikedPhotos(likes))
         } else if (target?.classList?.contains('js-collect')) {
-            const photoId: number = +(target.getAttribute('data-photoId'));
+            const photoId: number = +(target.getAttribute('data-photoid'));
 
             // @ts-ignore
             toggleCollectPhoto(photoId);
@@ -105,7 +105,7 @@ const Photos: React.FC<PropsType> = (props) => {
 
             dispatch(actionsCommon.setCollectPhotos(collectPhotos))
         } else if (article) {
-            const photoId: number = +(article.getAttribute('data-photoId'));
+            const photoId: number = +(article.getAttribute('data-photoid'));
 
             const photo = getPhotoCardById(photos, photoId);
             dispatch(actionsCommon.setPhotoModalCard(photo));

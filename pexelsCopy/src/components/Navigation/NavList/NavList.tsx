@@ -32,10 +32,10 @@ const NavList: React.FC<PropsType> = ({vocabulary, lang}) => {
             <NavListItem typeOfItem={'triplet'}/>
             <li>
                 <div className={'select-lang'}>
-                    <select ref={selectRef} onChange={selectLang}>
-                        <option selected={lang === 'en'} value="en">English</option>
-                        <option selected={lang === 'ru'} value="ru">Русский</option>
-                        <option selected={lang === 'by'} value="by">Беларускі</option>
+                    <select defaultValue={lang} ref={selectRef} onChange={selectLang}>
+                        <option value="en">English</option>
+                        <option value="ru">Русский</option>
+                        <option value="by">Беларускі</option>
                     </select>
                 </div>
             </li>

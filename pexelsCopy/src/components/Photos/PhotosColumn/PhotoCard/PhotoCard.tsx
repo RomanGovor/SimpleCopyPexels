@@ -20,7 +20,7 @@ const PhotoCard: React.FC<PhotoCardType & PropsType> = (props) => {
 
     return (
         <div className={'photo-card hide-featured-badge hide-favorite-badge'}>
-            <article className={'photo-item photo-item--overlay'} data-photoId={photoId}>
+            <article className={'photo-item photo-item--overlay'} data-photoid={photoId}>
                 <a className={'photo-item__link'}>
                     <img src={src} className={'photo-item__img'}/>
                     <div className={'badge-container'}>
@@ -43,7 +43,7 @@ const PhotoCard: React.FC<PhotoCardType & PropsType> = (props) => {
                             <img src={downloadIcon}/>
                         </i>
                     </a>
-                    <button data-photoId={photoId} className={'js-collect rd__button rd__button--collect rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
+                    <button data-photoid={photoId} className={'js-collect rd__button rd__button--collect rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
                         {!isCollect && <i className={'rd__button--collect--not-active--icon svg-icon'}>
                             <img src={addIcon}/>
                         </i>
@@ -53,7 +53,7 @@ const PhotoCard: React.FC<PhotoCardType & PropsType> = (props) => {
                             </i>
                         }
                     </button>
-                    <button data-photoId={photoId} className={'js-like rd__button rd__button--like rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
+                    <button data-photoid={photoId} className={'js-like rd__button rd__button--like rd__button--no-padding rd__button--text-white rd__button--with-icon'}>
                         {isLiked && <i className={'rd__button--like--active--icon svg-icon'}>
                             <img src={fullHeartIcon}/>
                         </i>

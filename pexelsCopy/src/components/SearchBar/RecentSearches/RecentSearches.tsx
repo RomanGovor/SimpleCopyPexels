@@ -6,8 +6,8 @@ type PropsType = {
 }
 
 const RecentSearches: React.FC<PropsType> = ({resentSearches}) => {
-    const resentElements = resentSearches.map((word) => {
-        return <RecentSearchesItem word={word}/>
+    const resentElements = resentSearches.map((word,i) => {
+        return <RecentSearchesItem word={word} key={i}/>
     })
 
     return (

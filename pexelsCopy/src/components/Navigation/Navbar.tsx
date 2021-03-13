@@ -16,15 +16,19 @@ const Navbar: React.FunctionComponent<PropsType> = (props) => {
     const [scrollTop, setScrollTop] = useState(0);
     const vocabularyNavbar: NavigationLangType = props.common.vocabulary.navigation;
     const vocabularySearchBar: SearchBarLangType = props.common.vocabulary.searchBar;
+    const [isTransparent, setIsTransparent] = useState(true);
 
-    document.addEventListener('scroll', () => {
+    const scrollHandler = () => {
         const temp = window.pageYOffset;
         if (((temp > 50) && (scrollTop <= 50)) || ((temp <= 50) && (scrollTop > 50))) {
             setScrollTop(temp);
         }
-    })
+    }
 
-    const [isTransparent, setIsTransparent] = useState(true);
+    useEffect(() => {
+        document.addEventListener('scroll', scrollHandler);
+        return () => document.removeEventListener('scroll', scrollHandler);
+    });
 
     useEffect(() => {
         if(scrollTop > 50 && isTransparent) setIsTransparent(false);
