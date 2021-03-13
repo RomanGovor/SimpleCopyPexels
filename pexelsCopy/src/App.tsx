@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect, useDispatch} from "react-redux";
-import {actions, setHeaderPhoto} from "./redux/homeReducer";
+import {actions} from "./redux/homeReducer";
 import {withSuspense} from "./components/common/Suspense/withSuspense";
 import {getRandomArray} from "./utils/common";
 import {defaultPhotoParameters, mainCategories, trendingCategories} from "./utils/constants/constants";
@@ -31,7 +31,8 @@ const App: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setHeaderPhoto());
+        // dispatch(setHeaderPhoto());
+        dispatch(actions.asyncSetHeaderPhoto());
 
         const recommendCategories = getRandomArray(mainCategories.length, 7, mainCategories);
         dispatch(actions.setRecommendCategories(recommendCategories));

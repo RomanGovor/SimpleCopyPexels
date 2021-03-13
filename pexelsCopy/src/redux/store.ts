@@ -4,6 +4,10 @@ import homeReducer from "./homeReducer";
 import categoryReducer from "./categoryReducer";
 import commonReducer from "./commonReducer";
 import collectionsReducer from "./collectionsReducer";
+import createSagaMiddleware from 'redux-saga'
+import {rootWatcher} from "./saga";
+
+const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
     homePage: homeReducer,
@@ -21,7 +25,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export type InferActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 export type BaseThunkType<A extends Action = Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+// const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+
+sagaMiddleware.run(rootWatcher);
+
 // @ts-ignore
 window.__store__ = store;
 

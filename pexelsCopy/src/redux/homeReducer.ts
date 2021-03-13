@@ -1,13 +1,14 @@
 import {InferActionsTypes, BaseThunkType} from './store';
 import {IHeaderContentItem, PhotoCardType} from '../types/commonTypes';
 import defaultHeaderImage from '../assets/images/default-header-bg.jpeg';
-import {photoAPI} from '../api/api';
-import {getRandomInt} from "../utils/common";
-import {isUniquePhoto, photoEditing} from "../utils/photoEditing";
+import {isUniquePhoto} from "../utils/photoEditing";
 
 export type ThunkType = BaseThunkType<ActionsType>
 
-const initialState = {
+export const ASYNC_MAIN_UPDATE_ARRAY_PHOTOS = 'MAIN/ASYNC_SET_CURATED_PAGE_INDEX';
+export const ASYNC_MAIN_UPDATE_HEADER_PHOTO = 'MAIN/ASYNC_UPDATE_HEADER_PHOTO';
+
+export const initialState = {
     photos: [] as Array<PhotoCardType>,
     maxCountOfColumns: 3,
     headerPhoto: {
@@ -24,8 +25,12 @@ export const actions = {
         ({type: 'MAIN/ADD_PHOTO_CARD', phNames, phPhotoLink, phLink, src} as const),
     setHeaderPhoto: (phLink: string, src: string, phNames: string) =>
         ({type: 'MAIN/UPDATE_HEADER_PHOTO', phNames, phLink, src} as const),
+    asyncSetHeaderPhoto: () =>
+        ({type: ASYNC_MAIN_UPDATE_HEADER_PHOTO} as const),
     updateArrayPhotos: (photos: Array<PhotoCardType>) =>
         ({type: 'MAIN/UPDATE_ARRAY_PHOTOS', photos} as const),
+    asyncUpdateArrayPhotos: (page: number) =>
+        ({type: ASYNC_MAIN_UPDATE_ARRAY_PHOTOS, page} as const),
     setRecommendCategories: (categories: Array<IHeaderContentItem>) =>
         ({type: 'MAIN/SET_RECOMMEND_CATEGORIES', categories} as const),
     setCuratedPageIndex: (page: number) =>
@@ -33,7 +38,7 @@ export const actions = {
 }
 
 export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actions>
+export type ActionsType = InferActionsTypes<typeof actions>
 
 const homeReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -86,45 +91,6 @@ const homeReducer = (state = initialState, action: ActionsType): InitialStateTyp
         }
         default:
             return state;
-    }
-}
-
-export const setHeaderPhoto = (): ThunkType => async (dispatch) => {
-    const data = await photoAPI.getHeaderPhoto();
-    let src;
-    if (Boolean(data)) {
-        // @ts-ignore
-        const indexPhoto = getRandomInt(data?.photos.length);
-        // @ts-ignore
-        const photo = data?.photos[indexPhoto];
-        const photographerUrl = photo?.photographer_url || initialState.headerPhoto.phLink;
-        const photographer = photo?.photographer || initialState.headerPhoto.phNames;
-
-        try {
-            src = (photo.src.landscape !== undefined || photo.src.original !== undefined)
-                ? (photo.src.landscape || photo.src.original)
-                : initialState.headerPhoto.src;
-        } catch (err) {
-            console.log(err);
-            src = initialState.headerPhoto.src;
-        }
-
-        dispatch(actions.setHeaderPhoto(photographerUrl, src, photographer));
-    }
-}
-
-
-export const updateArrayPhotos = (page: number = 1): ThunkType => async (dispatch) => {
-    const curatedPageIndex = initialState.curatedPageIndex;
-
-    if (page !== curatedPageIndex) {
-        const data = await photoAPI.getCuratedPhoto(page);
-
-        if (Boolean(data)) {
-            const photos = photoEditing(data);
-            dispatch(actions.updateArrayPhotos(photos));
-            dispatch(actions.setCuratedPageIndex(page));
-        }
     }
 }
 

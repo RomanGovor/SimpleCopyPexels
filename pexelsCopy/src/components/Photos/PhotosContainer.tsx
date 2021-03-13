@@ -13,7 +13,8 @@ type mapStateType = {
     collectPhotos: Array<number>,
     query?: string,
     isBadRequest: boolean
-    updatePhotos: (page: number, query?: string) => CategoryThunkType & HomeThunkType
+    // updatePhotos: (page: number, query?: string) => CategoryThunkType & HomeThunkType
+    updatePhotos: (page: number, query?: string) => any
 }
 
 type PropsType = mapStateType;

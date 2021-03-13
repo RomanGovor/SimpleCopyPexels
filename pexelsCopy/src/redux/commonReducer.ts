@@ -1,16 +1,14 @@
-import {InferActionsTypes, BaseThunkType} from './store';
+import {InferActionsTypes} from './store';
 import {CollectArrayType, LikesArrayType, PhotoCardType, TrendingSearchesType} from "../types/commonTypes";
-import {photoAPI, wordsAPI} from "../api/api";
-import {getRandomArray} from "../utils/common";
-import img1 from "../assets/images/defaultImages/image-1.jpeg";
 import {VocabularyLangType} from "../types/langTypes";
 import {VocabularyEn} from "../utils/languages/en";
 import {VocabularyRu} from "../utils/languages/ru";
 import {VocabularyBy} from "../utils/languages/by";
 import {defaultPhotoParameters} from "../utils/constants/constants";
 
+export const ASYNC_SET_SUGGESTION_WORDS = 'COMMON/ASYNC_SET_SUGGESTION_WORDS';
 
-type ThunkType = BaseThunkType<ActionsType>
+// type ThunkType = BaseThunkType<ActionsType>
 
 export const initialState = {
     likedPhotos: [] as Array<number>,
@@ -41,6 +39,8 @@ export const actionsCommon = {
         ({type: 'COMMON/SET_NAV_INPUT_VALUE', value} as const),
     setSuggestionWords: (suggestionWords: Array<string>) =>
         ({type: 'COMMON/SET_SUGGESTION_WORDS', suggestionWords} as const),
+    asyncSetSuggestionWords: (value: string) =>
+        ({type: ASYNC_SET_SUGGESTION_WORDS, value} as const),
     setPhotoModalCard: (photoCard: PhotoCardType) =>
         ({type: 'COMMON/SET_PHOTO_MODAL_CARD', photoCard} as const),
     setOpenModalFlag: (isOpen: boolean) =>
@@ -51,7 +51,7 @@ export const actionsCommon = {
 
 
 export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actionsCommon>
+export type ActionsType = InferActionsTypes<typeof actionsCommon>
 
 const commonReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -125,8 +125,6 @@ const commonReducer = (state = initialState, action: ActionsType): InitialStateT
                     vocabulary = VocabularyEn
             }
 
-            console.log(vocabulary);
-
             return {
                 ...state,
                 lang: action.lang,
@@ -137,19 +135,5 @@ const commonReducer = (state = initialState, action: ActionsType): InitialStateT
             return state;
     }
 }
-
-export const setSuggestionWords = (value: string): ThunkType => async (dispatch) => {
-    if (value.trim().length !== 0) {
-        const data = await wordsAPI.getArrayWord(value);
-
-        if (Boolean(data)) {
-            const arr: Array<string> = data.data.results.data;
-            const filterArr = arr.filter((el) => !el.includes(' '));
-            const words = getRandomArray(filterArr.length, 10, filterArr);
-            dispatch(actionsCommon.setSuggestionWords(words));
-        }
-    }
-}
-
 
 export default commonReducer;

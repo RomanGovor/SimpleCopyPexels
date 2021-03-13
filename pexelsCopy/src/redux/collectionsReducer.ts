@@ -1,10 +1,9 @@
 import {InferActionsTypes, BaseThunkType} from './store';
 import {PhotoCardType} from "../types/commonTypes";
-import {photoAPI} from "../api/api";
-import {getPhotoByData} from "../utils/photoEditing";
 
+export const COLLECTIONS_ASYNC_SET_COLLECTIONS_PHOTO = 'COLLECTIONS/ASYNC_SET_COLLECTIONS_PHOTO';
 
-type ThunkType = BaseThunkType<ActionsType>
+// type ThunkType = BaseThunkType<ActionsType>
 
 export const initialState = {
     photos: [] as Array<PhotoCardType>,
@@ -14,6 +13,8 @@ export const initialState = {
 export const actionsCollections = {
     addCollectionsPhoto: (photo: PhotoCardType) =>
         ({type: 'COLLECTIONS/SET_COLLECTIONS_PHOTO_ELEM', photo} as const),
+    asyncAddCollectionsPhoto: (arrayId: Array<number>) =>
+        ({type: COLLECTIONS_ASYNC_SET_COLLECTIONS_PHOTO, arrayId} as const),
     deleteCollectionsPhoto: (id: number) =>
         ({type: 'COLLECTIONS/DELETE_COLLECTIONS_PHOTO_ELEM', id} as const),
     zeroingData: () =>
@@ -22,7 +23,7 @@ export const actionsCollections = {
 
 
 export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actionsCollections>
+export type ActionsType = InferActionsTypes<typeof actionsCollections>
 
 const collectionsReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -53,20 +54,6 @@ const collectionsReducer = (state = initialState, action: ActionsType): InitialS
         }
         default:
             return state;
-    }
-}
-
-export const setCollectionPhotos = (arrayId: Array<number>): ThunkType => async (dispatch) => {
-    if (arrayId && arrayId.length !== 0) {
-        for (let i = 0; i < arrayId.length; i++) {
-            const data = await photoAPI.getPhotoBuId(arrayId[i]);
-
-            if (Boolean(data)) {
-                // @ts-ignore
-                const photo = getPhotoByData(data);
-                dispatch(actionsCollections.addCollectionsPhoto(photo));
-            }
-        }
     }
 }
 

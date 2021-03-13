@@ -1,11 +1,12 @@
 import {InferActionsTypes, BaseThunkType} from './store';
 import {PhotoCardType} from '../types/commonTypes';
-import {photoAPI} from '../api/api';
-import {isUniquePhoto, photoEditing} from "../utils/photoEditing";
+import {isUniquePhoto} from "../utils/photoEditing";
+
+export const CATEGORIES_ASYNC_UPDATE_ARRAY_PHOTOS = 'CATEGORIES/ASYNC_UPDATE_ARRAY_PHOTOS';
 
 export type ThunkType = BaseThunkType<ActionsType>
 
-const initialState = {
+export const initialState = {
     photos: [] as Array<PhotoCardType>,
     maxCountOfColumns: 3,
     photoPageIndex: 0 as number,
@@ -15,6 +16,8 @@ const initialState = {
 export const actionsCategories = {
     updateArrayPhotos: (photos: Array<PhotoCardType>) =>
         ({type: 'CATEGORIES/UPDATE_ARRAY_PHOTOS', photos} as const),
+    asyncUpdateArrayPhotos: (page: number, category?: string) =>
+        ({type: CATEGORIES_ASYNC_UPDATE_ARRAY_PHOTOS, page, category} as const),
     setCuratedPageIndex: (page: number) =>
         ({type: 'CATEGORIES/SET_PAGE_INDEX', page} as const),
     setCategoryTitle: (title: string) =>
@@ -24,7 +27,7 @@ export const actionsCategories = {
 }
 
 export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actionsCategories>
+export type ActionsType = InferActionsTypes<typeof actionsCategories>
 
 const categoryReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -47,7 +50,6 @@ const categoryReducer = (state = initialState, action: ActionsType): InitialStat
             };
         }
         case 'CATEGORIES/SET_CATEGORY_TITLE': {
-            // initialState.title = action.title;
             return {
                 ...state,
                 title: action.title
@@ -63,20 +65,6 @@ const categoryReducer = (state = initialState, action: ActionsType): InitialStat
         }
         default:
             return state;
-    }
-}
-
-export const updateCategoriesArrayPhotos = (page: number, category?: string): ThunkType => async (dispatch) => {
-    const curatedPageIndex = initialState.photoPageIndex;
-
-    if (page !== curatedPageIndex && category) {
-        const data = await photoAPI.getCategoryPhotos(category, page);
-
-        if (Boolean(data)) {
-            const photos = photoEditing(data);
-            dispatch(actionsCategories.updateArrayPhotos(photos));
-            dispatch(actionsCategories.setCuratedPageIndex(page));
-        }
     }
 }
 

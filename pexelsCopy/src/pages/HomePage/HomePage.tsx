@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './HomePage.scss';
-import {InitialStateType, updateArrayPhotos} from "../../redux/homeReducer";
+import {actions, InitialStateType} from "../../redux/homeReducer";
 import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
 
 import UnderlinedTabs from "../../components/UnderlinedTabs/UnderlinedTabs";
@@ -37,7 +37,8 @@ const HomePage: React.FC<PropsType> = (props) => {
                                  likedPhotosArray={likedPhotosArray}
                                  collectPhotos={collectPhotos}
                                  isBadRequest={false}
-                                 updatePhotos={updateArrayPhotos}/>
+                                 updatePhotos={actions.asyncUpdateArrayPhotos}/>
+                                 {/*updatePhotos={updateArrayPhotos}/>*/}
             </div>
         </>
     );

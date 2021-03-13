@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {InitialStateType, updateCategoriesArrayPhotos} from "../../redux/categoryReducer";
+import {actionsCategories, InitialStateType} from "../../redux/categoryReducer";
 import Navbar from "../../components/Navigation/Navbar";
 import './CategoryPage.scss'
 import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
@@ -40,7 +40,7 @@ const CategoryPage: React.FC<PropsType> = (props) => {
                         collectPhotos={collectPhotos}
                         query={query}
                         isBadRequest={isBadRequest}
-                        updatePhotos={updateCategoriesArrayPhotos}/>
+                        updatePhotos={actionsCategories.asyncUpdateArrayPhotos}/>
                 </section>
             </div>
         </>

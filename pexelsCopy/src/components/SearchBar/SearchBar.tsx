@@ -8,7 +8,7 @@ import {ISearchBarType} from "../../types/commonTypes";
 import TrendingSearches from "./TrendingSearches/TrendingSearches";
 import {useDispatch} from "react-redux";
 import {addResentWord} from "../../utils/storage/storageRecentWords";
-import {actionsCommon, setSuggestionWords} from "../../redux/commonReducer";
+import {actionsCommon} from "../../redux/commonReducer";
 import {Redirect} from "react-router-dom";
 import {SearchBarLangType} from "../../types/langTypes";
 
@@ -52,7 +52,8 @@ const SearchBar: React.FC<PropsType> = (props) => {
     }, []);
 
     useEffect(() => {
-        dispatch(setSuggestionWords(value));
+        // dispatch(setSuggestionWords(value));
+        dispatch(actionsCommon.asyncSetSuggestionWords(value));
     }, [value]);
 
     const onChange = () => {

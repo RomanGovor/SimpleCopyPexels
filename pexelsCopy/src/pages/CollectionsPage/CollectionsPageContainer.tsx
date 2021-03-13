@@ -7,8 +7,7 @@ import CollectionsPage from "./CollectionsPage";
 import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
 import {
     actionsCollections,
-    InitialStateType as CollectionsStateType,
-    setCollectionPhotos
+    InitialStateType as CollectionsStateType
 } from "../../redux/collectionsReducer";
 
 
@@ -24,8 +23,7 @@ const CollectionsPageContainer: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setCollectionPhotos(props.common.collectPhotos));
-
+        dispatch(actionsCollections.asyncAddCollectionsPhoto(props.common.collectPhotos));
         return () => {
             dispatch(actionsCollections.zeroingData());
         }

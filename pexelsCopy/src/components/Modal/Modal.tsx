@@ -123,7 +123,7 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal, vocabulary}) => {
                                 <div className={'nav-level__right photo-page__action-buttons-level-item'}>
                                     <div className={'nav-level__item photo-page__action-buttons-level-item'}>
                                         <div className={'rd__button-group photo-page__action-buttons'}>
-                                            <button onClick={onLikeBtnClick} data-photoId={photo.photoId} className={'js-like js-photo-page-action-buttons-like rd__button rd__button--white rd__button--with-icon-left'}>
+                                            <button onClick={onLikeBtnClick} className={'js-like js-photo-page-action-buttons-like rd__button rd__button--white rd__button--with-icon-left'}>
                                                 {isLiked && <i className={'rd__button--like--active--icon svg-icon'}>
                                                     <img src={fullHeartIcon}/>
                                                 </i>
@@ -133,7 +133,7 @@ const Modal: React.FC<PropsType> = ({photo, isOpenModal, vocabulary}) => {
                                                 </i>
                                                 }
                                             </button>
-                                            <button onClick={onCollectBtnClick} data-photoId={photo.photoId} className={'js-collect js-photo-page-action-buttons-collect rd__button rd__button--white rd__button--with-icon-left'}>
+                                            <button onClick={onCollectBtnClick} className={'js-collect js-photo-page-action-buttons-collect rd__button rd__button--white rd__button--with-icon-left'}>
                                                 {!isCollect && <i className={'rd__button--collect-active--icon svg-icon'}>
                                                     <img src={addIcon}/>
                                                 </i>
