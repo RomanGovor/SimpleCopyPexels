@@ -27,6 +27,14 @@ export type TrendingSearchesType = {
     img: string
 }
 
+export type NavigationItemType = {
+    isNavItem?: boolean,
+    isIcon?: boolean,
+    iconClass?: string,
+    link: string,
+    title: string
+}
+
 export interface ISearchBarType {
     isBigSearchBar?: boolean,
     suggestionWords?: Array<string>,

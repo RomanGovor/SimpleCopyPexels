@@ -31,7 +31,6 @@ const App: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // dispatch(setHeaderPhoto());
         dispatch(actions.asyncSetHeaderPhoto());
 
         const recommendCategories = getRandomArray(mainCategories.length, 7, mainCategories);
@@ -57,25 +56,21 @@ const App: React.FC<PropsType> = (props) => {
         if (isUniquePhoto(props.common.photoModalCard, defaultPhotoParameters)) {
             dispatch(actionsCommon.setOpenModalFlag(true));
         }
-
     }, [props.common.photoModalCard]);
 
     return (
         <div className="App">
             <Switch>
                 <Route exact path='/'
-                       render={() => <Redirect to={'/main'}/>}/>
-
-                <Route path='/main'
                        render={() => <SuspendedHomePage />}/>
 
-                <Route path='/category/:query?'
+                <Route exact path='/category/:query?'
                        render={() => <SuspendedCategoryPage />}/>
 
-                <Route path='/collections'
+                <Route exact path='/collections'
                        render={() => <SuspendedCollectionsPage />}/>
 
-                <Route path='*'
+                <Route exact path='*'
                        render={() => <div>404 NOT FOUND</div>}/>
             </Switch>
 

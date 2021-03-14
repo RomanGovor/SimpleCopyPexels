@@ -61,7 +61,8 @@ export type HomePageLangType = {
 }
 
 export type CollectionsPageLangType = {
-    title: string
+    title: string,
+    noPictures: string
 }
 
 export type ModalLangType = {

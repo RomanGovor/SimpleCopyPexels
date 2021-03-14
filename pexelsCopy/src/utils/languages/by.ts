@@ -47,7 +47,8 @@ export const VocabularyBy: VocabularyLangType = {
         newTag: 'Новы'
     },
     collectionsPage: {
-        title: 'Калекцыя'
+        title: 'Калекцыя',
+        noPictures: 'Ваша калекцыя пустая. Дадайце спачатку фоткі'
     },
     modal: {
         collect: 'У калекцыю',

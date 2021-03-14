@@ -47,7 +47,8 @@ export const VocabularyEn: VocabularyLangType = {
         newTag: 'New'
     },
     collectionsPage: {
-        title: 'Collections'
+        title: 'Collections',
+        noPictures: 'Your collection is empty. Add pictures first'
     },
     modal: {
         collect: 'Collect',

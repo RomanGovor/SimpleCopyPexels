@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import Navbar from "../../components/Navigation/Navbar";
 import '../CategoryPage/CategoryPage.scss';
 import {InitialStateType as CommonStateType} from "../../redux/commonReducer";
-import PhotosContainer from "../../components/Photos/PhotosContainer";
 import { InitialStateType } from "../../redux/collectionsReducer";
 import Photos from "../../components/Photos/Photos";
 
@@ -19,12 +18,14 @@ const CollectionsPage: React.FC<PropsType> = (props) => {
     const likedPhotos = props.common.likedPhotos;
     const collectPhotos = props.common.collectPhotos;
 
+    const title = photos && photos.length > 0 ? vocabulary.title : vocabulary.noPictures;
+
     return (
         <>
             <Navbar isMain={false} common={props.common}/>
             <div className={'category'}>
                 <section className={'category__header'}>
-                    <h1 className={'category__header__title'}>{vocabulary.title}</h1>
+                    <h1 className={'category__header__title'}>{title}</h1>
                 </section>
                 <section className={'category__grid'}>
                     { photos && (photos.length !== 0) &&

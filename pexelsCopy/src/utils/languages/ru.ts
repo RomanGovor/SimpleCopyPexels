@@ -47,7 +47,8 @@ export const VocabularyRu: VocabularyLangType = {
         newTag: 'Новые'
     },
     collectionsPage: {
-        title: 'Коллекция'
+        title: 'Коллекция',
+        noPictures: 'Ваша коллекция пуста. Добавьте сначала фотки'
     },
     modal: {
         collect: 'В коллекцию',
