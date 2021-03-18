@@ -1,5 +1,7 @@
-import {AppStateType} from './store';
+import { AppStateType } from './store';
 
-export const selectCuratedPageIndex = (state: AppStateType) => {
-    return state.homePage.curatedPageIndex;
-}
+const selectCuratedPageIndex = (state: AppStateType): number => {
+  return state.homePage.curatedPageIndex;
+};
+
+export default selectCuratedPageIndex;

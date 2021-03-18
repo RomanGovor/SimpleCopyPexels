@@ -1,37 +1,39 @@
-import {Action, applyMiddleware, combineReducers, compose, createStore} from "redux";
-import thunkMiddleware, {ThunkAction} from "redux-thunk";
-import homeReducer from "./homeReducer";
-import categoryReducer from "./categoryReducer";
-import commonReducer from "./commonReducer";
-import collectionsReducer from "./collectionsReducer";
-import createSagaMiddleware from 'redux-saga'
-import {rootWatcher} from "./saga";
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import homeReducer from './homeReducer';
+import categoryReducer from './categoryReducer';
+import commonReducer from './commonReducer';
+import collectionsReducer from './collectionsReducer';
+import rootWatcher from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-    homePage: homeReducer,
-    categoryPage: categoryReducer,
-    common: commonReducer,
-    collectionsPage: collectionsReducer
-})
+  homePage: homeReducer,
+  categoryPage: categoryReducer,
+  common: commonReducer,
+  collectionsPage: collectionsReducer,
+});
 
 type RootReducerType = typeof rootReducer;
-export type AppStateType = ReturnType<RootReducerType>
+export type AppStateType = ReturnType<RootReducerType>;
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
-// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-export type InferActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
-export type BaseThunkType<A extends Action = Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
 
-// const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+export type InferActionsTypes<T> = T extends {
+  [keys: string]: (...args: any[]) => infer U;
+}
+  ? U
+  : never;
+
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(rootWatcher);
 
-// @ts-ignore
-window.__store__ = store;
-
-export default store
-
+export default store;

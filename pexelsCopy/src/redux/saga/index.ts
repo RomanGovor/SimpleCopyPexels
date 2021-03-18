@@ -1,9 +1,11 @@
-import {all} from 'redux-saga/effects';
-import {homePageWatcher} from "./homePageSaga";
-import {commonWatcher} from "./commonSaga";
-import {categoryPageWatcher } from './categoryPageSaga';
-import {collectionsPageWatcher} from "./collectionsPageSaga";
+import { all } from 'redux-saga/effects';
+import categoryPageWatcher from './categoryPageSaga';
+import collectionsPageWatcher from './collectionsPageSaga';
+import commonWatcher from './commonSaga';
+import homePageWatcher from './homePageSaga';
 
-export function* rootWatcher() {
-    yield all([homePageWatcher(), commonWatcher(),collectionsPageWatcher(), categoryPageWatcher()]);
+function* rootWatcher() {
+  yield all([homePageWatcher(), commonWatcher(), collectionsPageWatcher(), categoryPageWatcher()]);
 }
+
+export default rootWatcher;

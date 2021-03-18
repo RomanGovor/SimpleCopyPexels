@@ -1,27 +1,26 @@
-import {LikesArrayType} from "../../types/commonTypes";
+import { LikesArrayType } from '../../types/commonTypes';
 
 export function getLikes(): LikesArrayType {
-    // @ts-ignore
-    const likes: LikesArrayType = JSON.parse(localStorage.getItem('pexels/likes'));
-    return !likes ? [] : likes;
+  const likes: LikesArrayType = JSON.parse(<string>localStorage.getItem('pexels/likes'));
+  return !likes ? [] : likes;
 }
 
 export function setLikes(likes: LikesArrayType) {
-    localStorage.setItem('pexels/likes', JSON.stringify(likes));
+  localStorage.setItem('pexels/likes', JSON.stringify(likes));
 }
 
-export function togglePhotoLike(id: never & number): boolean {
-    const likes: LikesArrayType = getLikes();
+export function togglePhotoLike(id: number): boolean {
+  const likes: LikesArrayType = getLikes();
 
-    if (likes.includes(id)) {
-        const likeIndex = likes.indexOf(id);
-        likes.splice(likeIndex, 1);
+  if (likes.includes(id)) {
+    const likeIndex = likes.indexOf(id);
+    likes.splice(likeIndex, 1);
 
-        setLikes(likes);
-        return false;
-    }
-
-    likes.push(id);
     setLikes(likes);
-    return true;
+    return false;
+  }
+
+  likes.push(id);
+  setLikes(likes);
+  return true;
 }

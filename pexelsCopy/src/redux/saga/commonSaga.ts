@@ -1,31 +1,29 @@
-import {call, put, takeEvery} from "redux-saga/effects";
-import {wordsAPI} from "../../api/api";
-import {getRandomArray} from "../../utils/common";
-import {actionsCommon, ActionsType, ASYNC_SET_SUGGESTION_WORDS} from "../commonReducer";
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { wordsAPI } from '../../api/api';
+import { getRandomArray } from '../../utils/common';
+import { actionsCommon, ActionsType, ASYNC_SET_SUGGESTION_WORDS } from '../commonReducer';
 
-function getWords(data: any): Array<string> | void {
-    if (Boolean(data)) {
-        const arr: Array<string> = data.data.results.data;
-        const filterArr = arr.filter((el) => !el.includes(' '));
-        const words = getRandomArray(filterArr.length, 10, filterArr);
-        return words;
-    }
+function getWords(data: any): Array<string> {
+  const arr: Array<string> = data.data.results.data;
+  const filterArr = arr.filter((el) => !el.includes(' '));
+  const wordsArr = <Array<string>>getRandomArray(filterArr.length, 10, filterArr);
+  return wordsArr;
 }
 
-function* setSuggestionWords(action: ActionsType) {
-    // @ts-ignore
-    const value = action.value;
+function* setSuggestionWords(action: ActionsType): any {
+  if (action.type === ASYNC_SET_SUGGESTION_WORDS) {
+    const { value } = action;
 
     if (value && value.trim().length !== 0) {
-        // @ts-ignore
-        const data = yield call(wordsAPI.getArrayWord, value);
-        // @ts-ignore
-        const words = yield getWords(data);
-        yield put(actionsCommon.setSuggestionWords(words));
+      const data = yield call(wordsAPI.getArrayWord, value);
+      const words = yield getWords(data);
+      yield put(actionsCommon.setSuggestionWords(words));
     }
+  }
 }
 
-export function* commonWatcher() {
-    // @ts-ignore
-    yield takeEvery(ASYNC_SET_SUGGESTION_WORDS, setSuggestionWords);
+function* commonWatcher() {
+  yield takeEvery(ASYNC_SET_SUGGESTION_WORDS, setSuggestionWords);
 }
+
+export default commonWatcher;

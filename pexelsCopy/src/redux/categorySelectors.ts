@@ -1,5 +1,7 @@
-import {AppStateType} from './store';
+import { AppStateType } from './store';
 
-export const selectCategoryTitle = (state: AppStateType) => {
-    return state.categoryPage.title;
-}
+const selectCategoryTitle = (state: AppStateType): string => {
+  return state.categoryPage.title;
+};
+
+export default selectCategoryTitle;
