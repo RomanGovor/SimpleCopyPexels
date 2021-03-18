@@ -11,10 +11,9 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'jsx-a11y/interactive-supports-focus': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
-    'react/destructuring-assignment': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
     'jsx-a11y/mouse-events-have-key-events': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'react/destructuring-assignment': 'off'
 },
   env: {
     "browser": true,

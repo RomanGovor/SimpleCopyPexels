@@ -7,7 +7,7 @@ type PropsType = {
 };
 
 const TrendingSearches: React.FC<PropsType> = ({ trendingSearches }) => {
-  const trendingElements = trendingSearches.map((el, i) => {
+  const trendingElements = trendingSearches.map((el) => {
     return <TrendingSearchesItem trendingItem={el} key={el.word} />;
   });
 

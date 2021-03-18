@@ -38,6 +38,8 @@ const SuspendedCategoryPage = withSuspense(CategoryPageContainer);
 
 const App: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
+  const { photoModalCard, isOpenModal, vocabulary } = props.common;
+  const { modal: vocabularyModal } = vocabulary;
 
   useEffect(() => {
     dispatch(actions.asyncSetHeaderPhoto());
@@ -73,7 +75,7 @@ const App: React.FC<PropsType> = (props) => {
     if (isUniquePhoto(props.common.photoModalCard, defaultPhotoParameters)) {
       dispatch(actionsCommon.setOpenModalFlag(true));
     }
-  }, [props.common.photoModalCard]);
+  }, [photoModalCard]);
 
   return (
     <div className="App">
@@ -87,11 +89,7 @@ const App: React.FC<PropsType> = (props) => {
         <Route exact path="*" render={() => <div>404 NOT FOUND</div>} />
       </Switch>
 
-      <Modal
-        isOpenModal={props.common.isOpenModal}
-        photo={props.common.photoModalCard}
-        vocabulary={props.common.vocabulary.modal}
-      />
+      <Modal isOpenModal={isOpenModal} photo={photoModalCard} vocabulary={vocabularyModal} />
     </div>
   );
 };

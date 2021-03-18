@@ -63,7 +63,7 @@ const SearchBar: React.FC<PropsType> = (props) => {
 
   const onChange = () => {
     const valueTemp = inputEl.current?.value;
-    if (valueTemp) dispatch(setInput(valueTemp));
+    if (valueTemp || valueTemp === '') dispatch(setInput(valueTemp));
   };
 
   const onClick = () => {

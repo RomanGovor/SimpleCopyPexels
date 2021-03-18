@@ -1,6 +1,6 @@
 import { IHeaderContentItem, PhotoCardType, TrendingSearchesType } from '../../types/commonTypes';
 import defaultAvatar from '../../assets/images/default-avatar.svg';
-import defaultImg from '../../assets/images/defaultImages/image-1.jpeg';
+import defaultImg from '../../assets/images/loading.gif';
 import lakeImg from '../../assets/images/trendingImages/lake.jpeg';
 import fruitsImg from '../../assets/images/trendingImages/fruits.jpeg';
 import talkingImg from '../../assets/images/trendingImages/talking.jpeg';

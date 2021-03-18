@@ -21,9 +21,14 @@ const generatePhotoColumns = (
     arrColumns = arrColumns.sort((a, b) => a.height - b.height);
 
     const calcAttitudeImg: number = (img.height / img.width) * 100;
-
-    arrColumns[0].height += calcAttitudeImg;
-    arrColumns[0].photos.push(i);
+    if (!Number.isNaN(calcAttitudeImg)) {
+      arrColumns[0].height += calcAttitudeImg;
+      arrColumns[0].photos.push(i);
+    } else {
+      console.log(calcAttitudeImg, img, img.width, img.height);
+      arrColumns[0].height += 700;
+      arrColumns[0].photos.push(i);
+    }
   }
 
   arrColumns = arrColumns.sort((a, b) => a.colIndex - b.colIndex);
