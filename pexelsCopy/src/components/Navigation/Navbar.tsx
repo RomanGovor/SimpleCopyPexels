@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import './navbar.scss';
 import logo from '../../assets/icons/pexels.svg';
 import NavList from './NavList/NavList';
@@ -48,12 +49,12 @@ const Navbar: React.FunctionComponent<PropsType> = (props) => {
 
   return (
     <nav className={`navigation ${props.isMain && isTransparent ? 'navigation__transparent' : ''}`}>
-      <a className="navigation__logo" href="/">
+      <NavLink className="navigation__logo" to="/">
         <div className="navigation__logo__img">
           <img alt="logo" src={logo} />
         </div>
         <div className="navigation__logo__text">Pexels</div>
-      </a>
+      </NavLink>
       <div className="navigation__search-bar">
         <SearchBar searchProps={SearchProps} vocabulary={vocabularySearchBar} />
       </div>

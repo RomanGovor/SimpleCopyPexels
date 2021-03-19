@@ -1,4 +1,5 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
 import { photoAPI } from '../../api/api';
 import { getPhotoByData } from '../../utils/photoEditing';
 import {
@@ -6,8 +7,9 @@ import {
   ActionsType,
   COLLECTIONS_ASYNC_SET_COLLECTIONS_PHOTO,
 } from '../collectionsReducer';
+import { PhotoCardType } from '../../types/commonTypes';
 
-function* setCollectionPhotos(action: ActionsType): any {
+function* setCollectionPhotos(action: ActionsType): SagaIterator | PhotoCardType {
   if (action.type === COLLECTIONS_ASYNC_SET_COLLECTIONS_PHOTO) {
     const { arrayId } = action;
 

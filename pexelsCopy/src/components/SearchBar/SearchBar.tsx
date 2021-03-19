@@ -43,7 +43,7 @@ const SearchBar: React.FC<PropsType> = (props) => {
     dispatch(setInput(''));
   };
 
-  const keydownHandler = (event: any) => {
+  const keydownHandler = (event: KeyboardEventInit) => {
     if (event.key === 'Enter') {
       const isFocused = document.activeElement === inputEl.current;
       if (isFocused) addResentWordEvent();

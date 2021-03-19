@@ -57,7 +57,6 @@ const Modal: React.FC<PropsType> = ({ photo, isOpenModal, vocabulary }) => {
     setCollect(toggleCollectPhoto(photo.photoId));
     const collectPhotos = getCollectPhotos();
 
-    console.log(collectPhotos);
     dispatch(actionsCommon.setCollectPhotos(collectPhotos));
   };
 

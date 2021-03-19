@@ -1,4 +1,6 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
+import { Photos } from 'pexels';
+import { SagaIterator } from 'redux-saga';
 import {
   actions,
   ActionsType,
@@ -9,8 +11,9 @@ import {
 import { photoAPI } from '../../api/api';
 import { photoEditing } from '../../utils/photoEditing';
 import { getRandomInt } from '../../utils/common';
+import { PhotoCardType } from '../../types/commonTypes';
 
-function getHeaderPhoto(data: any) {
+function getHeaderPhoto(data: Photos) {
   let src;
   if (data) {
     const indexPhoto = getRandomInt(data?.photos.length);
@@ -38,7 +41,7 @@ function getHeaderPhoto(data: any) {
   return { photographerUrl, photographer, src };
 }
 
-function* updateArrayPhotosWorker(action: ActionsType): any {
+function* updateArrayPhotosWorker(action: ActionsType): SagaIterator | PhotoCardType[] {
   if (action.type === ASYNC_MAIN_UPDATE_ARRAY_PHOTOS) {
     const { page } = action;
 
@@ -54,7 +57,7 @@ function* updateArrayPhotosWorker(action: ActionsType): any {
   }
 }
 
-function* setHeaderPhoto(): any {
+function* setHeaderPhoto(): SagaIterator | PhotoCardType {
   const data = yield call(photoAPI.getHeaderPhoto);
   const photo = yield getHeaderPhoto(data);
   yield put(actions.setHeaderPhoto(photo.photographerUrl, photo.src, photo.photographer));

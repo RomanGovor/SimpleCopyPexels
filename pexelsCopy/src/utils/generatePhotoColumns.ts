@@ -25,7 +25,6 @@ const generatePhotoColumns = (
       arrColumns[0].height += calcAttitudeImg;
       arrColumns[0].photos.push(i);
     } else {
-      console.log(calcAttitudeImg, img, img.width, img.height);
       arrColumns[0].height += 700;
       arrColumns[0].photos.push(i);
     }

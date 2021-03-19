@@ -131,7 +131,6 @@ const Photos: React.FC<PropsType> = (props) => {
 
   const onArticleClick = (id: number) => {
     const photo = getPhotoCardById(photos, id);
-    console.log(photo);
     dispatch(actionsCommon.setPhotoModalCard(photo));
   };
 

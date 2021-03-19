@@ -1,4 +1,5 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
 import { photoAPI } from '../../api/api';
 import { photoEditing } from '../../utils/photoEditing';
 import {
@@ -7,8 +8,9 @@ import {
   CATEGORIES_ASYNC_UPDATE_ARRAY_PHOTOS,
   ActionsType,
 } from '../categoryReducer';
+import { PhotoCardType } from '../../types/commonTypes';
 
-function* updateArrayPhotosWorker(action: ActionsType): any {
+function* updateArrayPhotosWorker(action: ActionsType): SagaIterator | PhotoCardType[] {
   if (action.type === CATEGORIES_ASYNC_UPDATE_ARRAY_PHOTOS) {
     const { category, page } = action;
     const curatedPageIndex = initialState.photoPageIndex;

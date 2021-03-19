@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
 import { wordsAPI } from '../../api/api';
 import { getRandomArray } from '../../utils/common';
 import { actionsCommon, ActionsType, ASYNC_SET_SUGGESTION_WORDS } from '../commonReducer';
@@ -10,7 +11,7 @@ function getWords(data: any): Array<string> {
   return wordsArr;
 }
 
-function* setSuggestionWords(action: ActionsType): any {
+function* setSuggestionWords(action: ActionsType): SagaIterator | string[] {
   if (action.type === ASYNC_SET_SUGGESTION_WORDS) {
     const { value } = action;
 
